@@ -1,0 +1,107 @@
+name: Windows EXE and installer
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/windows-installer.yml', 'main.py', 'runtime_paths.py', 'app/**', 'packaging/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Install Python dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt "pyinstaller==6.22.3"
+      - name: Run regression tests
+        shell: pwsh
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m unittest tests.test_runtime_paths tests.test_portfolio tests.test_files_backup tests.test_database_lock -v
+      - name: Build Windows application
+        shell: pwsh
+        run: |
+          python -m PyInstaller --clean --noconfirm --onedir --windowed --name ResearchPortfolioManager --add-data "config/defaults.json:config" --add-data "resources/style.qss:resources" main.py
+          if ($LASTEXITCODE -ne 0) { throw 'PyInstaller failed' }
+          Copy-Item -LiteralPath demo_data -Destination dist/ResearchPortfolioManager/demo_data -Recurse -Force
+          if (!(Test-Path dist/ResearchPortfolioManager/ResearchPortfolioManager.exe)) { throw 'Executable missing' }
+          if (!(Test-Path dist/ResearchPortfolioManager/_internal/config/defaults.json)) { throw 'Config missing' }
+          if (!(Test-Path dist/ResearchPortfolioManager/_internal/resources/style.qss)) { throw 'QSS missing' }
+      - name: Smoke-test packaged application
+        shell: pwsh
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          $root = Join-Path $env:RUNNER_TEMP 'rpm-install-smoke'
+          $exe = (Resolve-Path dist/ResearchPortfolioManager/ResearchPortfolioManager.exe).Path
+          $argString = '--data-dir "' + $root + '"'
+          $p = Start-Process -FilePath $exe -ArgumentList $argString -PassThru
+          $ready = $false
+          try {
+            for ($i=0; $i -lt 35; $i++) {
+              Start-Sleep -Seconds 1
+              if ((Test-Path (Join-Path $root 'config/settings.json')) -and (Test-Path (Join-Path $root 'portfolio.sqlite3'))) { $ready = $true; break }
+              $p.Refresh()
+              if ($p.HasExited) { break }
+            }
+          } finally {
+            $p.Refresh()
+            if (!$p.HasExited) { Stop-Process -Id $p.Id -Force }
+          }
+          if (!$ready) {
+            if (Test-Path (Join-Path $root 'logs/application.log')) { Get-Content (Join-Path $root 'logs/application.log') }
+            throw 'Frozen app did not initialize its data directory'
+          }
+          $env:RPM_SMOKE_DIR = $root
+          python -c "import os,sqlite3,pathlib,json; p=pathlib.Path(os.environ['RPM_SMOKE_DIR']); d=json.loads((p/'config/settings.json').read_text(encoding='utf-8')); c=sqlite3.connect(p/'portfolio.sqlite3'); assert d['demo'] is False; assert c.execute('select version from schema_info').fetchone()[0] == 1; print('EXE smoke test passed')"
+          if ($LASTEXITCODE -ne 0) { throw 'Database smoke test failed' }
+      - name: Compile Inno Setup installer
+        shell: pwsh
+        run: |
+          $compiler = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6/ISCC.exe'
+          if (!(Test-Path $compiler)) {
+            choco install innosetup --no-progress -y
+            if ($LASTEXITCODE -ne 0) { throw 'Inno Setup installation failed' }
+          }
+          if (!(Test-Path $compiler)) { throw 'Inno Setup compiler missing' }
+          New-Item -ItemType Directory -Force -Path release | Out-Null
+          & $compiler packaging/ResearchPortfolioManager.iss
+          if ($LASTEXITCODE -ne 0) { throw 'Inno Setup compilation failed' }
+          if (!(Test-Path release/ResearchPortfolioManager_v1.0.1_Windows_Setup.exe)) { throw 'Installer missing' }
+      - name: Produce portable ZIP and SHA-256 manifest
+        shell: pwsh
+        run: |
+          Compress-Archive -Path dist/ResearchPortfolioManager -DestinationPath release/ResearchPortfolioManager_v1.0.1_Windows_Portable.zip -CompressionLevel Optimal -Force
+          $items = Get-ChildItem release -File | Where-Object { $_.Extension -in @('.exe','.zip') }
+          $lines = foreach ($item in $items) { (Get-FileHash -Algorithm SHA256 -LiteralPath $item.FullName).Hash.ToLowerInvariant() + '  ' + $item.Name }
+          $lines | Set-Content release/SHA256SUMS.txt -Encoding ascii
+          Get-Content release/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ResearchPortfolioManager-v1.0.1-Windows
+          path: |
+            release/*.exe
+            release/*.zip
+            release/SHA256SUMS.txt
+          if-no-files-found: error
+      - name: Publish v1.0.1 release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = 'v1.0.1'
+          gh release view $tag --repo $env:GITHUB_REPOSITORY 2>&1 | Out-Null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $tag release/ResearchPortfolioManager_v1.0.1_Windows_Setup.exe release/ResearchPortfolioManager_v1.0.1_Windows_Portable.zip release/SHA256SUMS.txt --clobber --repo $env:GITHUB_REPOSITORY
+          } else {
+            gh release create $tag release/ResearchPortfolioManager_v1.0.1_Windows_Setup.exe release/ResearchPortfolioManager_v1.0.1_Windows_Portable.zip release/SHA256SUMS.txt --target $env:GITHUB_SHA --title 'ResearchPortfolioManager v1.0.1 — Windows installer' --notes-file packaging/RELEASE_NOTES.md --latest --repo $env:GITHUB_REPOSITORY
+          }
+          if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }

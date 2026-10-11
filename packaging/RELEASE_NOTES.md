@@ -1,6 +1,6 @@
-# ResearchPortfolioManager v1.0.1 — Windows 安装版
+# ResearchPortfolioManager v1.0.2 — Windows 安装版
 
-这是 V1.0 的 **Windows 安装及便携打包维护版本**，不是数据库升级。保留原有六页及 SQLite schema 版本 1。
+这是 V1.0 的 **Windows 安装及便携打包维护版本**，调整“关于软件”窗口文案并同步公开说明，不涉及数据库升级。保留原有六页及 SQLite schema 版本 1。
 
 - **Windows_Setup.exe**：64 位 Windows 用户安装包（免安装 Python），按当前用户安装，不需要管理员权限。
 - **Windows_Portable.zip**：解压后运行 `ResearchPortfolioManager.exe`，请保留完整目录，不要只移动 exe。

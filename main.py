@@ -12,13 +12,14 @@ from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QApplication, QMessageBox
 
 from database.store import Store
+from runtime_paths import default_data_dir
 
 APP_NAME = '本科科研项目与成果档案管理系统 V1.0'
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=APP_NAME)
-    parser.add_argument('--data-dir', type=Path, default=Path(__file__).resolve().parent / 'user_data', help='资料目录（默认项目内 user_data）')
+    parser.add_argument('--data-dir', type=Path, default=default_data_dir(), help='资料目录（默认项目内 user_data）')
     args = parser.parse_args(argv)
     application = QApplication(sys.argv[:1])
     application.setApplicationName(APP_NAME)

@@ -1,0 +1,22 @@
+# Dependencies and local runtime
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Private live data and user-generated artifacts
+user_data/
+preview_cache/
+logs/
+*.lock
+*.log
+*.sqlite3-wal
+*.sqlite3-shm
+*.sqlite3-journal
+*.zip
+*.bak
+.DS_Store
+Thumbs.db
+
+# demo_data/ is a deliberately generated, nonprivate fixture and is tracked.

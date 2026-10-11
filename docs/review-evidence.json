@@ -1,0 +1,89 @@
+{
+  "original_project_preserved": true,
+  "baseline_files_verified_including_original_zip": 69,
+  "original_file_mismatches": [],
+  "new_files_in_original": [],
+  "original_zip_sha256": "6cea56bd16b9238ef7cb8b08f2241300a7e8cc987cf4a3aae0846d1c139dc90d",
+  "schema_sql_and_version_unchanged": true,
+  "schema_version": 1,
+  "same_historical_screenshots": [
+    "00-empty-dashboard.png",
+    "00_真实空资料库.png",
+    "01-projects.png",
+    "02-tasks.png",
+    "03-achievements.png",
+    "05-reports.png",
+    "06-dashboard.png"
+  ],
+  "updated_affected_screenshots": [
+    "04-materials.png"
+  ],
+  "new_actual_qt_screenshots": [
+    "reviewed-04-material-preview.png",
+    "reviewed-project-leader-form.png"
+  ],
+  "reviewed_real_user_data_absent": true,
+  "delivered_demo_validated_read_only": {
+    "counts": {
+      "projects": 2,
+      "tasks": 4,
+      "achievements": 2,
+      "materials": 4
+    },
+    "demo": true,
+    "all_material_hashes_valid": true
+  },
+  "default_real_demo": false,
+  "final_regression_batch": {
+    "batch": "regressions",
+    "started_utc": "2026-10-10T13:41:36.294782+00:00",
+    "environment": {
+      "python": "3.11.9",
+      "pyside6": "6.10.3",
+      "sqlite": "3.45.1",
+      "platform": "Windows-10-10.0.26100-SP0",
+      "executable": "C:\\REDACTED_WORKSPACE\\work\\v\\Scripts\\python.exe",
+      "qt_backend": "native Windows (asserted by GUI flow)"
+    },
+    "modules": [
+      "tests.test_preview_regression",
+      "tests.test_reviewed_validation",
+      "tests.test_reviewed_compatibility",
+      "tests.test_reviewed_flow"
+    ],
+    "returncode": 0,
+    "test_count": 32,
+    "unittest_seconds": 43.705,
+    "elapsed_seconds": 44.057,
+    "output_file": "test-results-reviewed-regressions.txt"
+  },
+  "final_original_suite_batch": {
+    "batch": "original-suite",
+    "started_utc": "2026-10-10T13:42:42.779353+00:00",
+    "environment": {
+      "python": "3.11.9",
+      "pyside6": "6.10.3",
+      "sqlite": "3.45.1",
+      "platform": "Windows-10-10.0.26100-SP0",
+      "executable": "C:\\REDACTED_WORKSPACE\\work\\v\\Scripts\\python.exe",
+      "qt_backend": "native Windows (asserted by GUI flow)"
+    },
+    "modules": [
+      "tests.test_database_lock",
+      "tests.test_files_backup",
+      "tests.test_portfolio",
+      "tests.test_gui"
+    ],
+    "returncode": 0,
+    "test_count": 43,
+    "unittest_seconds": 27.874,
+    "elapsed_seconds": 28.224,
+    "output_file": "test-results-reviewed-original-suite.txt"
+  },
+  "unique_final_test_count": 75,
+  "failures_final_batches": 0,
+  "skips_final_batches": 0,
+  "original_valid_backup_compatibility": "Passed test_actual_original_v1_backup_restores_full_schema_records_links_hashes and native restore UI.",
+  "system_calls_evidence": "reviewed-system-open-evidence.json",
+  "actual_external_editor_edit_save": "Not verified; regression edit/save is simulated."
+}

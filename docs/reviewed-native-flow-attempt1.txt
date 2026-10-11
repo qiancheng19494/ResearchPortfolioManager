@@ -1,0 +1,52 @@
+test_background_completion_main_thread_and_failure_recovery (tests.test_gui.NativeGuiTests.test_background_completion_main_thread_and_failure_recovery) ... 后台操作失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\tests\test_gui.py", line 348, in failing_job
+    raise ValueError("后台失败测试")
+ValueError: 后台失败测试
+ok
+test_native_settings_delete_unlink_details_and_missing_file (tests.test_gui.NativeGuiTests.test_native_settings_delete_unlink_details_and_missing_file) ... 业务操作失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\app\main_window.py", line 146, in perform
+    result = function()
+             ^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\app\pages.py", line 345, in <lambda>
+    self.owner.perform(lambda: self.owner.portfolio.delete_achievement(row["id"]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\services\portfolio.py", line 170, in delete_achievement
+    raise ValueError('成果有关联材料，请先在材料归档中解除关联')
+ValueError: 成果有关联材料，请先在材料归档中解除关联
+后台操作失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\app\main_window.py", line 184, in <lambda>
+    lambda: self.materials.prepare_preview(material_id), open_preview)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\services\materials.py", line 181, in prepare_preview
+    original = self.file_path(material_id, verify=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\services\materials.py", line 168, in file_path
+    raise FileNotFoundError(f"受管理材料副本缺失：{record['original_name']}。哈希不能重建文件；请从早期完整备份恢复到新资料目录，或找到原文件并重新导入新版本。")
+FileNotFoundError: 受管理材料副本缺失：补充演示.txt。哈希不能重建文件；请从早期完整备份恢复到新资料目录，或找到原文件并重新导入新版本。
+ok
+test_native_six_pages_actions_end_to_end (tests.test_gui.NativeGuiTests.test_native_six_pages_actions_end_to_end) ... ok
+test_native_leader_form_failure_new_edit_historical_no_success (tests.test_reviewed_flow.ReviewedNativeFlowTests.test_native_leader_form_failure_new_edit_historical_no_success) ... ok
+test_native_real_data_false_stays_unmarked_on_close_reopen (tests.test_reviewed_flow.ReviewedNativeFlowTests.test_native_real_data_false_stays_unmarked_on_close_reopen) ... ok
+test_native_six_pages_preview_exports_both_restores_close_reopen (tests.test_reviewed_flow.ReviewedNativeFlowTests.test_native_six_pages_preview_exports_both_restores_close_reopen) ... FAIL
+
+======================================================================
+FAIL: test_native_six_pages_preview_exports_both_restores_close_reopen (tests.test_reviewed_flow.ReviewedNativeFlowTests.test_native_six_pages_preview_exports_both_restores_close_reopen)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.0_Reviewed\tests\test_reviewed_flow.py", line 117, in test_native_six_pages_preview_exports_both_restores_close_reopen
+    self.assertFalse(materials.edit_button.isEnabled())
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 6 tests in 30.126s
+
+FAILED (failures=1)

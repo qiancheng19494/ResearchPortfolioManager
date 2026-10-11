@@ -1,0 +1,47 @@
+{
+  "original_module": "C:\\REDACTED_WORKSPACE\\outputs\\ResearchPortfolioManager\\database\\store.py",
+  "method": "isolated original code, patched association call / simulated editor write",
+  "cases": [
+    {
+      "bug": "direct_open_archive_copy",
+      "archived": false,
+      "actual_target_is_managed": true,
+      "managed_changed_by_simulated_editor": true,
+      "source_intact": true,
+      "backup_error": "材料副本校验失败，备份已取消：active.txt"
+    },
+    {
+      "bug": "direct_open_archive_copy",
+      "archived": true,
+      "actual_target_is_managed": true,
+      "managed_changed_by_simulated_editor": true,
+      "source_intact": true,
+      "backup_error": "材料副本校验失败，备份已取消：archived.txt"
+    },
+    {
+      "bug": "empty_leader",
+      "input": "",
+      "saved_value": ""
+    },
+    {
+      "bug": "empty_leader",
+      "input": "   ",
+      "saved_value": ""
+    },
+    {
+      "bug": "empty_leader",
+      "input": null,
+      "saved_value": "None"
+    },
+    {
+      "bug": "invalid_config_types",
+      "accepted_config": {
+        "name": "测试姓名",
+        "background": 123,
+        "interests": [],
+        "demo": "false"
+      },
+      "demo_interpreted_true": true
+    }
+  ]
+}

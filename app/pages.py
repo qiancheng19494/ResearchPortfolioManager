@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (
     QAbstractItemView, QHeaderView, QMessageBox, QFileDialog, QGroupBox,
     QScrollArea,
 )
+from runtime_paths import restore_launch_command
 from services.portfolio import PROJECT_CATEGORIES, PROJECT_STATUSES, TASK_STATUSES, ACHIEVEMENT_STATUSES
 from app.dialogs import (
     ProjectDialog, TaskDialog, AchievementDialog, MaterialDialog, named,
@@ -642,9 +643,6 @@ class ReportsPage(QWidget):
         self.owner.run_job("正在验证备份并恢复到新目录…", lambda: self.owner.exports.restore(archive, target), self.restored)
 
     def restored(self, path):
-        # PowerShell literals preserve Chinese, spaces, apostrophes and dollar signs.
-        quoted = lambda value: "'" + str(value).replace("'", "''") + "'"
-        entry = Path(__file__).resolve().parents[1] / 'main.py'
-        command = f'& {quoted(sys.executable)} {quoted(entry)} --data-dir {quoted(path)}'
+        command = restore_launch_command(path)
         self.saved("恢复与完整性校验成功", path, f"请关闭软件，在项目目录重新启动：\n{command}")
         self.owner.show_info("恢复成功", f"记录、关联与材料哈希已通过验证。\n目标资料目录：{path}\n\n关闭软件后，在项目目录运行：\n{command}")

@@ -8,9 +8,9 @@ ResearchPortfolioManager 是面向个人的本地 Windows 桌面资料管理工�
 
 首次运行真实资料库为空。姓名和背景只是可编辑的个人资料默认值；软件不会自动认定论文录用、授权、获奖、软著登记或成果真实性。
 
-## Windows EXE 与安装包（GitHub v1.0.1）
+## Windows EXE 与安装包（GitHub v1.0.2）
 
-Windows 64 位用户可前往 GitHub Releases 下载 `ResearchPortfolioManager_v1.0.1_Windows_Setup.exe`（安装版）或 `ResearchPortfolioManager_v1.0.1_Windows_Portable.zip`（便携版）。此安装版与源代码版使用相同的六页功能及 SQLite schema 1，打包过程不包含个人真实资料。`v1.0.0` 仍保留为源代码首发版本；`v1.0.1` 是打包维护版本。
+Windows 64 位用户可前往 GitHub Releases 下载 `ResearchPortfolioManager_v1.0.2_Windows_Setup.exe`（安装版）或 `ResearchPortfolioManager_v1.0.2_Windows_Portable.zip`（便携版）。此安装版与源代码版使用相同的六页功能及 SQLite schema 1，打包过程不包含个人真实资料。`v1.0.0` 仍保留为源代码首发版本；`v1.0.2` 是后续界面文案与打包维护版本。
 
 安装版默认将资料保存在 `%LOCALAPPDATA%\ResearchPortfolioManager\user_data`，与安装程序本体分离。升级或卸载不会主动覆盖/删除此资料目录，仍需自行定期备份。想打开以前源码版的资料，请先备份，然后用快捷方式的目标参数 `--data-dir "原资料目录"` 指向该目录。**不要复制演示数据库覆盖真实数据。**
 

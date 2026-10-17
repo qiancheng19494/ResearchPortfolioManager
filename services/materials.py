@@ -6,6 +6,7 @@ import logging
 import os
 from pathlib import Path, PurePosixPath
 import shutil
+import stat
 from datetime import datetime
 from uuid import uuid4
 
@@ -15,6 +16,17 @@ ALLOWED_EXTENSIONS = frozenset({
     '.md', '.rtf', '.ppt', '.pptx', '.png', '.jpg', '.jpeg', '.gif',
     '.bmp', '.webp', '.zip',
 })
+WINDOWS_DEVICE_NAMES = frozenset(
+    {'CON', 'PRN', 'AUX', 'NUL', 'CONIN$', 'CONOUT$'} |
+    {f'{prefix}{number}' for prefix in ('COM', 'LPT') for number in '123456789\u00b9\u00b2\u00b3'}
+)
+
+
+def _unsafe_windows_component(part: str) -> bool:
+    """Reject Win32 aliases as well as characters with device/path semantics."""
+    return (part.endswith((' ', '.')) or
+            any(ord(char) < 32 or char in '<>:"|?*' for char in part) or
+            part.split('.', 1)[0].rstrip(' ').upper() in WINDOWS_DEVICE_NAMES)
 
 
 def sha256_file(path: Path) -> str:
@@ -26,12 +38,12 @@ def sha256_file(path: Path) -> str:
 
 
 def safe_relative_path(root: Path, relative: str, *, materials_only: bool = False) -> Path:
-    """将数据库/清单相对路径限制在资料根目录内，拒绝符号链接。"""
+    """限制规范相对路径，拒绝 Windows 文件名别名、重解析点和硬链接。"""
     if not isinstance(relative, str) or not relative or '\\' in relative:
         raise ValueError('归档路径无效。')
     parts = PurePosixPath(relative).parts
     if (PurePosixPath(relative).is_absolute() or not parts or
-            any(part in {'.', '..'} or ':' in part or '\x00' in part for part in parts) or
+            any(part in {'.', '..'} or _unsafe_windows_component(part) for part in parts) or
             str(PurePosixPath(relative)) != relative):
         raise ValueError('归档路径必须是规范的安全相对路径。')
     if materials_only and (len(parts) < 3 or parts[0] != 'materials'):
@@ -41,8 +53,15 @@ def safe_relative_path(root: Path, relative: str, *, materials_only: bool = Fals
     probe = base
     for part in parts:
         probe /= part
-        if probe.is_symlink():
-            raise ValueError('归档路径不能经过符号链接。')
+        try:
+            info = probe.lstat()
+        except FileNotFoundError:
+            continue
+        if (stat.S_ISLNK(info.st_mode) or
+                getattr(info, 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT):
+            raise ValueError('归档路径不能经过符号链接或 Windows 重解析点。')
+        if stat.S_ISREG(info.st_mode) and info.st_nlink > 1:
+            raise ValueError('归档路径不能使用硬链接文件。')
     if not path.resolve().is_relative_to(base):
         raise ValueError('归档路径超出资料目录。')
     return path
@@ -68,11 +87,12 @@ class MaterialService:
 
     @staticmethod
     def _metadata(category, version_label, notes):
-        category = str(category).strip()
-        version_label = str(version_label).strip()
-        if not category or not version_label:
+        if (not isinstance(category, str) or not category.strip() or
+                not isinstance(version_label, str) or not version_label.strip()):
             raise ValueError('材料类别和版本标签不能为空。')
-        return category, version_label, str(notes)
+        if not isinstance(notes, str):
+            raise ValueError('材料备注必须为文本。')
+        return category.strip(), version_label.strip(), notes
 
     def import_file(self, source, project_id, achievement_id=None, category='其他',
                     version_label='V1', notes='') -> str:
@@ -169,6 +189,46 @@ class MaterialService:
         if verify and (path.stat().st_size != record['size'] or sha256_file(path) != record['sha256']):
             raise ValueError(f"受管理材料副本校验失败，大小或 SHA-256 已变化：{record['original_name']}。哈希不能重建原内容；请从早期完整备份恢复到新资料目录，或找到完好的原文件并重新导入新版本。旧记录不会改写。")
         return path
+
+    def audit_materials(self):
+        """只读检查全部材料；单个材料异常不会阻止后续项目的检查。
+
+        大文件按块计算 SHA-256，调用方应使用后台任务。报告反映读取期间
+        的结果；不更改数据库、旧哈希或文件，不创建预览，不尝试修复内容。
+        """
+        report = {'checked_at': datetime.now().isoformat(timespec='seconds'),
+                  'total': 0, 'passed': 0, 'failed': 0, 'items': []}
+        with self.store.write_lock:
+            for record in self.list_materials():
+                item = {key: record[key] for key in
+                        ('id', 'original_name', 'project_name', 'version_label', 'relative_path')}
+                item.update(project_archived=bool(record['project_archived']),
+                            expected_size=record['size'], expected_sha256=record['sha256'],
+                            actual_size=None, actual_sha256=None, status='error', reason='')
+                try:
+                    path = safe_relative_path(self.store.root, record['relative_path'],
+                                              materials_only=True)
+                    info = path.stat()
+                    if not stat.S_ISREG(info.st_mode):
+                        raise ValueError('受管理材料路径不是普通文件。')
+                    item['actual_size'] = info.st_size
+                    item['actual_sha256'] = sha256_file(path)
+                    if (item['actual_size'] == item['expected_size'] and
+                            item['actual_sha256'] == item['expected_sha256']):
+                        item.update(status='passed', reason='大小和 SHA-256 与归档记录一致。')
+                    else:
+                        item.update(status='changed', reason='大小或 SHA-256 与归档记录不符；哈希不能重建原内容，请从完好备份恢复或重新导入新版本。')
+                except FileNotFoundError:
+                    item.update(status='missing', reason='受管理材料副本缺失；哈希不能重建文件，请从完好备份恢复或重新导入新版本。')
+                except ValueError as exc:
+                    item.update(status='unsafe_path', reason=str(exc))
+                except (OSError, TypeError) as exc:
+                    item.update(status='error', reason=f'材料无法读取：{exc}')
+                report['items'].append(item)
+        report['total'] = len(report['items'])
+        report['passed'] = sum(item['status'] == 'passed' for item in report['items'])
+        report['failed'] = report['total'] - report['passed']
+        return report
 
     def prepare_preview(self, material_id) -> Path:
         """校验归档原副本后生成独立预览；交付给外部应用的副本不自动清理。

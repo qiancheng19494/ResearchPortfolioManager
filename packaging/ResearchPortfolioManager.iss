@@ -1,4 +1,4 @@
-#define AppVersion "1.2.0"
+#define AppVersion "1.3.0"
 [Setup]
 AppId={{D04131C2-33E3-4429-B8B9-73A07F03D480}
 AppName=ResearchPortfolioManager
@@ -10,7 +10,7 @@ DefaultGroupName=ResearchPortfolioManager
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 OutputDir=..\release
-OutputBaseFilename=ResearchPortfolioManager_v1.2.0_Windows_Setup
+OutputBaseFilename=ResearchPortfolioManager_v1.3.0_Windows_Setup
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern

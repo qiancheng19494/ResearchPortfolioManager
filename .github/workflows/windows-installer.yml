@@ -2,7 +2,7 @@ name: Windows EXE and installer
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/windows-installer.yml', 'main.py', 'runtime_paths.py', 'app/**', 'packaging/**', 'demo_data/**']
+    paths: ['.github/workflows/windows-installer.yml', 'main.py', 'runtime_paths.py', 'app/**', 'packaging/**', 'demo_data/**', 'services/**', 'database/**', 'tests/**', 'requirements.txt']
   workflow_dispatch:
 permissions:
   contents: write
@@ -25,7 +25,7 @@ jobs:
         shell: pwsh
         env:
           QT_QPA_PLATFORM: offscreen
-        run: python -m unittest tests.test_runtime_paths tests.test_portfolio tests.test_files_backup tests.test_database_lock tests.test_v11_dates tests.test_v11_filters_reports -v
+        run: python -m unittest tests.test_runtime_paths tests.test_portfolio tests.test_files_backup tests.test_database_lock tests.test_v11_dates tests.test_v11_filters_reports tests.test_v13_materials tests.test_v13_backup tests.test_v13_config tests.test_v13_integrity_gui -v
       - name: Build Windows application
         shell: pwsh
         run: |
@@ -77,35 +77,35 @@ jobs:
           New-Item -ItemType Directory -Force -Path release | Out-Null
           & $compiler packaging/ResearchPortfolioManager.iss
           if ($LASTEXITCODE -ne 0) { throw 'Inno Setup compilation failed' }
-          if (!(Test-Path release/ResearchPortfolioManager_v1.2.0_Windows_Setup.exe)) { throw 'Installer missing' }
+          if (!(Test-Path release/ResearchPortfolioManager_v1.3.0_Windows_Setup.exe)) { throw 'Installer missing' }
       - name: Produce portable ZIP and SHA-256 manifest
         shell: pwsh
         run: |
-          Compress-Archive -Path dist/ResearchPortfolioManager -DestinationPath release/ResearchPortfolioManager_v1.2.0_Windows_Portable.zip -CompressionLevel Optimal -Force
+          Compress-Archive -Path dist/ResearchPortfolioManager -DestinationPath release/ResearchPortfolioManager_v1.3.0_Windows_Portable.zip -CompressionLevel Optimal -Force
           $items = Get-ChildItem release -File | Where-Object { $_.Extension -in @('.exe','.zip') }
           $lines = foreach ($item in $items) { (Get-FileHash -Algorithm SHA256 -LiteralPath $item.FullName).Hash.ToLowerInvariant() + '  ' + $item.Name }
           $lines | Set-Content release/SHA256SUMS.txt -Encoding ascii
           Get-Content release/SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: ResearchPortfolioManager-v1.2.0-Windows
+          name: ResearchPortfolioManager-v1.3.0-Windows
           path: |
             release/*.exe
             release/*.zip
             release/SHA256SUMS.txt
           if-no-files-found: error
-      - name: Publish v1.2.0 release
+      - name: Publish v1.3.0 release
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $tag = 'v1.2.0'
+          $tag = 'v1.3.0'
           gh release view $tag --repo $env:GITHUB_REPOSITORY 2>&1 | Out-Null
           if ($LASTEXITCODE -eq 0) {
             gh api --method PATCH "repos/$env:GITHUB_REPOSITORY/git/refs/tags/$tag" -f "sha=$env:GITHUB_SHA" -F force=false
             if ($LASTEXITCODE -ne 0) { throw 'Release tag fast-forward failed' }
-            gh release upload $tag release/ResearchPortfolioManager_v1.2.0_Windows_Setup.exe release/ResearchPortfolioManager_v1.2.0_Windows_Portable.zip release/SHA256SUMS.txt --clobber --repo $env:GITHUB_REPOSITORY
+            gh release upload $tag release/ResearchPortfolioManager_v1.3.0_Windows_Setup.exe release/ResearchPortfolioManager_v1.3.0_Windows_Portable.zip release/SHA256SUMS.txt --clobber --repo $env:GITHUB_REPOSITORY
           } else {
-            gh release create $tag release/ResearchPortfolioManager_v1.2.0_Windows_Setup.exe release/ResearchPortfolioManager_v1.2.0_Windows_Portable.zip release/SHA256SUMS.txt --target $env:GITHUB_SHA --title 'ResearchPortfolioManager v1.2.0 — Windows installer' --notes-file packaging/RELEASE_NOTES.md --latest --repo $env:GITHUB_REPOSITORY
+            gh release create $tag release/ResearchPortfolioManager_v1.3.0_Windows_Setup.exe release/ResearchPortfolioManager_v1.3.0_Windows_Portable.zip release/SHA256SUMS.txt --target $env:GITHUB_SHA --title 'ResearchPortfolioManager v1.3.0 — Windows installer' --notes-file packaging/RELEASE_NOTES.md --latest --repo $env:GITHUB_REPOSITORY
           }
           if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }

@@ -15,6 +15,7 @@ from app.dialogs import (
 )
 from runtime_paths import restore_launch_command
 from app.date_field import NullableDateField
+from app.integrity_dialog import MaterialIntegrityDialog
 
 
 def filter_combo(label, values=()):
@@ -379,6 +380,15 @@ class MaterialsPage(ListPage):
             button.setToolTip("后台校验归档材料并复制到独立预览目录；修改后请另存，再通过“导入新版本”归档。预览缓存不进入备份。")
         self.verify_button = self.add_action("校验 SHA-256", "verify", self.verify)
         self.actions.addStretch()
+        audit_actions = QHBoxLayout()
+        self.integrity_button = named(QPushButton("检查全部材料…"), "materials_integrity")
+        self.integrity_button.setToolTip("后台检查所有材料版本的大小和 SHA-256，包括已归档项目；不修改文件或旧哈希。")
+        self.integrity_button.clicked.connect(self.audit_materials)
+        audit_actions.addWidget(self.integrity_button)
+        audit_actions.addWidget(QLabel("检查全部版本（含归档项目），不受当前筛选影响。"))
+        audit_actions.addStretch()
+        self.layout.insertLayout(3, audit_actions)
+        self.integrity_dialog = None
         self.table.cellDoubleClicked.connect(lambda *_: self.edit())
 
     def project_changed(self):
@@ -443,6 +453,15 @@ class MaterialsPage(ListPage):
         row = self.selected()
         if row:
             self.owner.run_job("正在校验材料 SHA-256…", lambda: self.owner.materials.file_path(row["id"], verify=True), lambda path: self.owner.show_info("材料校验通过", f"SHA-256 与归档记录一致。\n{path}"))
+
+    def audit_materials(self):
+        self.owner.run_job("正在检查全部材料的大小和 SHA-256…",
+                           self.owner.materials.audit_materials, self.show_integrity_result)
+
+    def show_integrity_result(self, report):
+        self.integrity_dialog = MaterialIntegrityDialog(self.owner, report)
+        self.integrity_dialog.setAttribute(Qt.WA_DeleteOnClose)
+        self.integrity_dialog.open()
 
 
 class DashboardPage(QWidget):
@@ -631,6 +650,7 @@ class ReportsPage(QWidget):
             return
         project_id, type_, status = self.project.currentData(), self.type.currentData(), self.status.currentData()
         conditions = self.conditions.text()
+        self.prepare_result("CSV 导出")
         self.owner.run_job("正在导出成果台账…", lambda: self.owner.exports.export_csv(path, project_id=project_id, type=type_, status=status), lambda output: self.saved("CSV 导出成功", output, conditions))
 
     def export_html(self):
@@ -641,6 +661,7 @@ class ReportsPage(QWidget):
         path, _ = QFileDialog.getSaveFileName(self, "导出项目摘要", "项目摘要.html", "HTML 文件 (*.html)")
         if path:
             project_name = self.project.currentText()
+            self.prepare_result("HTML 导出")
             self.owner.run_job("正在导出项目摘要…", lambda: self.owner.exports.export_html(path, project_id), lambda output: self.saved("HTML 导出成功", output, f"项目：{project_name}；包含该项目全部保存记录。"))
 
     def backup(self):

@@ -1,0 +1,21 @@
+{
+  "client_date": "2026-10-17",
+  "schema_sql_unchanged_from_v12": true,
+  "schema_version": 1,
+  "backup_format_version": 1,
+  "v12_module_generated_backup_restored_by_v13": true,
+  "all_schema_records_and_links_exactly_preserved": true,
+  "managed_demo_materials_verified": 4,
+  "integrity_report_counts": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0
+  },
+  "json_report_roundtrip_passed": true,
+  "demo_files_byte_equal_to_v12": true,
+  "fresh_demo_false": true,
+  "restored_demo_true": true,
+  "entry_window_and_html_version": "V1.3",
+  "real_data_used": false,
+  "checks_are_delivery_script_checks_not_additional_unittest": true
+}

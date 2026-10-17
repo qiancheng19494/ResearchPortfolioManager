@@ -20,7 +20,7 @@ from app.pages import (
     MaterialsPage, ReportsPage,
 )
 
-APP_NAME = "本科科研项目与成果档案管理系统 V1.2"
+APP_NAME = "本科科研项目与成果档案管理系统 V1.3"
 
 
 class MainWindow(QMainWindow):
@@ -55,7 +55,7 @@ class MainWindow(QMainWindow):
         brand = QLabel("科研档案")
         brand.setObjectName("brand")
         side.addWidget(brand)
-        subtitle = QLabel("Research Portfolio\n个人本地资料管理 · V1.2")
+        subtitle = QLabel("Research Portfolio\n个人本地资料管理 · V1.3")
         subtitle.setObjectName("brand_subtitle")
         side.addWidget(subtitle)
         side.addSpacing(26)

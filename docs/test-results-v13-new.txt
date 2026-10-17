@@ -1,0 +1,129 @@
+{
+  "client_date": "2026-10-17",
+  "timezone": "Asia/Shanghai",
+  "started_utc": "2026-10-17T14:58:05.412680+00:00",
+  "python": "3.11.9",
+  "pyside6": "6.10.3",
+  "sqlite": "3.45.1",
+  "platform": "Windows-10-10.0.26100-SP0",
+  "qt_platform": "offscreen",
+  "modules": [
+    "tests.test_v13_materials",
+    "tests.test_v13_backup",
+    "tests.test_v13_config",
+    "tests.test_v13_integrity_gui"
+  ],
+  "batch": "new",
+  "returncode": 0,
+  "test_count": 34,
+  "unittest_seconds": 4.446,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 4.987
+}
+
+test_actual_hardlinked_managed_file_rejected_before_preview (tests.test_v13_materials.MaterialSafetyV13Tests.test_actual_hardlinked_managed_file_rejected_before_preview) ... ok
+test_actual_windows_junction_within_root_is_rejected (tests.test_v13_materials.MaterialSafetyV13Tests.test_actual_windows_junction_within_root_is_rejected) ... ok
+test_import_rejects_none_empty_and_nontext_required_metadata (tests.test_v13_materials.MaterialSafetyV13Tests.test_import_rejects_none_empty_and_nontext_required_metadata) ... ok
+test_import_rejects_nontext_notes_and_accepts_normal_metadata (tests.test_v13_materials.MaterialSafetyV13Tests.test_import_rejects_nontext_notes_and_accepts_normal_metadata) ... ok
+test_integrity_report_empty_database (tests.test_v13_materials.MaterialSafetyV13Tests.test_integrity_report_empty_database) ... ok
+test_integrity_report_handles_missing_and_continues (tests.test_v13_materials.MaterialSafetyV13Tests.test_integrity_report_handles_missing_and_continues) ... ok
+test_integrity_report_hardlink_is_unsafe (tests.test_v13_materials.MaterialSafetyV13Tests.test_integrity_report_hardlink_is_unsafe) ... ok
+test_integrity_report_passes_active_and_archived_without_mutation (tests.test_v13_materials.MaterialSafetyV13Tests.test_integrity_report_passes_active_and_archived_without_mutation) ... ok
+test_integrity_report_read_failure_isolated_mock (tests.test_v13_materials.MaterialSafetyV13Tests.test_integrity_report_read_failure_isolated_mock) ... ok
+test_integrity_report_same_size_content_change_is_not_passed (tests.test_v13_materials.MaterialSafetyV13Tests.test_integrity_report_same_size_content_change_is_not_passed) ... ok
+test_integrity_report_size_change_keeps_old_hash (tests.test_v13_materials.MaterialSafetyV13Tests.test_integrity_report_size_change_keeps_old_hash) ... ok
+test_integrity_report_unsafe_path_and_valid_record_continue (tests.test_v13_materials.MaterialSafetyV13Tests.test_integrity_report_unsafe_path_and_valid_record_continue) ... ok
+test_ordinary_unicode_space_and_case_paths_remain_valid (tests.test_v13_materials.MaterialSafetyV13Tests.test_ordinary_unicode_space_and_case_paths_remain_valid) ... ok
+test_traversal_and_noncanonical_paths_still_rejected (tests.test_v13_materials.MaterialSafetyV13Tests.test_traversal_and_noncanonical_paths_still_rejected) ... ok
+test_update_rejects_invalid_metadata_without_partial_write (tests.test_v13_materials.MaterialSafetyV13Tests.test_update_rejects_invalid_metadata_without_partial_write) ... ok
+test_windows_device_names_and_normalization_aliases_rejected (tests.test_v13_materials.MaterialSafetyV13Tests.test_windows_device_names_and_normalization_aliases_rejected) ... ok
+test_all_exports_refuse_actual_protected_directory_location (tests.test_v13_backup.OutputProtectionV13Tests.test_all_exports_refuse_actual_protected_directory_location) ... ok
+test_invalid_report_or_failed_replace_preserves_existing_file (tests.test_v13_backup.OutputProtectionV13Tests.test_invalid_report_or_failed_replace_preserves_existing_file) ... ok
+test_json_report_roundtrip_and_protected_destination (tests.test_v13_backup.OutputProtectionV13Tests.test_json_report_roundtrip_and_protected_destination) ... ok
+test_noncanonical_windows_member_names_rejected (tests.test_v13_backup.OutputProtectionV13Tests.test_noncanonical_windows_member_names_rejected) ... ok
+test_restore_refuses_direct_junction_target (tests.test_v13_backup.OutputProtectionV13Tests.test_restore_refuses_direct_junction_target) ... ok
+test_restore_refuses_empty_child_of_actual_protected_location (tests.test_v13_backup.OutputProtectionV13Tests.test_restore_refuses_empty_child_of_actual_protected_location) ... ok
+test_existing_fixed_temp_name_is_not_reused_or_deleted (tests.test_v13_config.ConfigWriteSafetyTests.test_existing_fixed_temp_name_is_not_reused_or_deleted) ... ok
+test_existing_hardlinked_temp_name_does_not_change_linked_file (tests.test_v13_config.ConfigWriteSafetyTests.test_existing_hardlinked_temp_name_does_not_change_linked_file) ... ok
+test_failed_replace_preserves_disk_and_memory_and_cleans_own_temp (tests.test_v13_config.ConfigWriteSafetyTests.test_failed_replace_preserves_disk_and_memory_and_cleans_own_temp) ... ok
+test_serialization_failure_preserves_previous_settings (tests.test_v13_config.ConfigWriteSafetyTests.test_serialization_failure_preserves_previous_settings) ... ok
+test_cancel_csv_and_html_exports_retains_previous_result (tests.test_v13_integrity_gui.IntegrityWidgetTests.test_cancel_csv_and_html_exports_retains_previous_result) ... ok
+test_cancel_report_export_keeps_files_and_does_not_start_worker (tests.test_v13_integrity_gui.IntegrityWidgetTests.test_cancel_report_export_keeps_files_and_does_not_start_worker) ... ok
+test_csv_and_html_failed_exports_clear_old_success_and_open_location (tests.test_v13_integrity_gui.IntegrityWidgetTests.test_csv_and_html_failed_exports_clear_old_success_and_open_location) ... 后台操作失败
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.3\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.3\app\pages.py", line 654, in <lambda>
+    self.owner.run_job("正在导出成果台账…", lambda: self.owner.exports.export_csv(path, project_id=project_id, type=type_, status=status), lambda output: self.saved("CSV 导出成功", output, conditions))
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+OSError: 隔离模拟导出失败
+后台操作失败
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.3\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.3\app\pages.py", line 665, in <lambda>
+    self.owner.run_job("正在导出项目摘要…", lambda: self.owner.exports.export_html(path, project_id), lambda output: self.saved("HTML 导出成功", output, f"项目：{project_name}；包含该项目全部保存记录。"))
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+OSError: 隔离模拟导出失败
+ok
+test_empty_library_is_not_claimed_all_passed_and_text_is_plain (tests.test_v13_integrity_gui.IntegrityWidgetTests.test_empty_library_is_not_claimed_all_passed_and_text_is_plain) ... ok
+test_failed_audit_does_not_open_result_or_report_passed (tests.test_v13_integrity_gui.IntegrityWidgetTests.test_failed_audit_does_not_open_result_or_report_passed) ... 后台操作失败
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.3\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+OSError: 隔离模拟数据库读取失败
+ok
+test_materials_button_audits_all_filters_in_worker_and_displays_on_main_thread (tests.test_v13_integrity_gui.IntegrityWidgetTests.test_materials_button_audits_all_filters_in_worker_and_displays_on_main_thread) ... ok
+test_report_export_failure_clears_previous_success (tests.test_v13_integrity_gui.IntegrityWidgetTests.test_report_export_failure_clears_previous_success) ... 后台操作失败
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.3\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.3\app\integrity_dialog.py", line 95, in <lambda>
+    lambda: self.owner.exports.export_integrity_report(path, self.report), self.exported)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+OSError: 隔离模拟写入失败
+ok
+test_report_export_saves_exact_snapshot_and_blocks_close_while_busy (tests.test_v13_integrity_gui.IntegrityWidgetTests.test_report_export_saves_exact_snapshot_and_blocks_close_while_busy) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 4.446s
+
+OK

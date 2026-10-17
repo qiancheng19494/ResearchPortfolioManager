@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import json
+import os
 import sqlite3
+import tempfile
 import threading
 from contextlib import contextmanager
 from pathlib import Path
@@ -168,10 +170,18 @@ class Store:
             if not isinstance(changes, dict):
                 raise ValueError('配置必须为 JSON 对象')
             config = validate_config(dict(getattr(self, 'config', DEFAULT_CONFIG)) | changes, DEFAULT_CONFIG)
-            temp = self.config_path.with_suffix('.tmp')
+            temp = None
             try:
-                temp.write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding='utf-8')
+                with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8',
+                                                 dir=self.config_path.parent,
+                                                 prefix='.settings-', suffix='.tmp',
+                                                 delete=False) as stream:
+                    temp = Path(stream.name)
+                    json.dump(config, stream, ensure_ascii=False, indent=2)
+                    stream.flush()
+                    os.fsync(stream.fileno())
                 temp.replace(self.config_path)
                 self.config = config
             finally:
-                temp.unlink(missing_ok=True)
+                if temp is not None:
+                    temp.unlink(missing_ok=True)

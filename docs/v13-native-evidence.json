@@ -1,0 +1,73 @@
+{
+  "client_date": "2026-10-17",
+  "timezone": "Asia/Shanghai",
+  "captured_utc": "2026-10-17T15:02:26.239645+00:00",
+  "project": "<WORKSPACE>/outputs/ResearchPortfolioManager_V1.3",
+  "qt_platform": "windows",
+  "window_size": [
+    1366,
+    768
+  ],
+  "capture_method": "Actual native Qt widget.grab; only local-path status label hidden",
+  "interaction_method": "Actual QTest clicks on six navigation buttons, About, material audit and JSON export buttons",
+  "data": "Isolated temporary copy of delivered synthetic demo_data; no live user data opened",
+  "six_pages_visible": true,
+  "about_visible": true,
+  "healthy_audit": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "all_statuses_passed": true
+  },
+  "json_export": {
+    "saved": true,
+    "selected_destination": "<TEMP>/healthy-report.json",
+    "selection_method": "File-dialog return value patched; native picker interaction not verified",
+    "matches_result_snapshot": true,
+    "sha256": "b32dee171b0468c5c9ff12a11c92257bc5901f3b03865fc858dbe030c5d42451"
+  },
+  "simulated_anomalies_in_temporary_copy": {
+    "missing": 1,
+    "changed": 1,
+    "result_total": 4,
+    "result_passed": 2,
+    "result_failed": 2,
+    "expected_size_hash_and_version_unchanged": true,
+    "no_automatic_file_repair": true
+  },
+  "demo_true_banner_visible_before_and_after_reopen": true,
+  "real_false_banner_hidden_before_and_after_reopen": true,
+  "closed_reopened_demo_config_and_record_counts_preserved": true,
+  "source_demo_unchanged": true,
+  "source_demo_sha256": {
+    "config/settings.json": "a10c20a3b1d8403f1350ec2fb7436b32f712c211c217b6eeb7c30f8076c8186a",
+    "materials/1c5011c3-b229-4a32-bee6-6e56849a4ca0/演示材料.txt": "cf752879563270a038ade2f80efc5cf7b974e3248574b2dfd9243f4ddd4ad4b7",
+    "materials/3b8fc324-940b-4948-b703-30428114b45b/演示材料.txt": "92d07ee78c161596fb4866063bc7d1bc36c75bdfff42c23d7ceb669c69af5b13",
+    "materials/77ad94b3-f7e8-4de4-a347-78e5ea44baf0/演示材料.txt": "155500e653f83d0ab872803753039926f6f8828a73769aadd5a5040cd6f93114",
+    "materials/89aedeb5-d9d7-4806-b38b-b222c79158b2/演示材料.txt": "04b26ed84c54dd6833ba7baf56a411b4f730bc212e2272c9ed03fb75f7feb60f",
+    "portfolio.sqlite3": "0a1df80f3ab66f014fc1d9247ac07a9ce3ce0fdeb4c150ab2bc9d6e1ba1240bd"
+  },
+  "record_counts": {
+    "projects": 2,
+    "tasks": 4,
+    "achievements": 2,
+    "materials": 4
+  },
+  "screenshots": [
+    "v13-dashboard.png",
+    "v13-projects.png",
+    "v13-tasks.png",
+    "v13-achievements.png",
+    "v13-materials.png",
+    "v13-reports.png",
+    "v13-about.png",
+    "v13-integrity-healthy.png",
+    "v13-integrity-anomalies.png"
+  ],
+  "not_unittest_cases": true,
+  "not_verified": [
+    "Native file picker interaction",
+    "Packaged installer/uninstaller wizard",
+    "Saving changes in a real external editor"
+  ]
+}

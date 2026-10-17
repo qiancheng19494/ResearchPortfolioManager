@@ -1,0 +1,236 @@
+{
+  "version": "V1.3",
+  "client_date": "2026-10-17",
+  "timezone": "Asia/Shanghai",
+  "project": "<WORKSPACE>/outputs/ResearchPortfolioManager_V1.3",
+  "environment": {
+    "python": "3.11.9",
+    "pyside6": "6.10.3",
+    "sqlite": "3.45.1",
+    "platform": "Windows-10-10.0.26100-SP0"
+  },
+  "local_unittest": {
+    "unique_test_count": 142,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "new_test_count": 34,
+    "inherited_test_count": 108,
+    "batches": [
+      {
+        "client_date": "2026-10-17",
+        "timezone": "Asia/Shanghai",
+        "started_utc": "2026-10-17T14:58:05.412680+00:00",
+        "python": "3.11.9",
+        "pyside6": "6.10.3",
+        "sqlite": "3.45.1",
+        "platform": "Windows-10-10.0.26100-SP0",
+        "qt_platform": "offscreen",
+        "modules": [
+          "tests.test_v13_materials",
+          "tests.test_v13_backup",
+          "tests.test_v13_config",
+          "tests.test_v13_integrity_gui"
+        ],
+        "batch": "new",
+        "returncode": 0,
+        "test_count": 34,
+        "unittest_seconds": 4.446,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "elapsed_seconds": 4.987,
+        "log": "test-results-v13-new.txt",
+        "log_sha256": "2ed1fd7d18d24ba94996f0078c18142e25fa11921a158d1735b4396d33fc6b82",
+        "counts_by_module": {
+          "tests.test_v13_materials": 16,
+          "tests.test_v13_backup": 6,
+          "tests.test_v13_config": 4,
+          "tests.test_v13_integrity_gui": 8
+        }
+      },
+      {
+        "client_date": "2026-10-17",
+        "timezone": "Asia/Shanghai",
+        "started_utc": "2026-10-17T14:58:57.131681+00:00",
+        "python": "3.11.9",
+        "pyside6": "6.10.3",
+        "sqlite": "3.45.1",
+        "platform": "Windows-10-10.0.26100-SP0",
+        "qt_platform": "native Windows",
+        "modules": [
+          "tests.test_v11_dates",
+          "tests.test_v11_filters_reports",
+          "tests.test_v11_native",
+          "tests.test_portfolio",
+          "tests.test_files_backup",
+          "tests.test_database_lock",
+          "tests.test_gui",
+          "tests.test_preview_regression",
+          "tests.test_reviewed_validation",
+          "tests.test_reviewed_compatibility",
+          "tests.test_reviewed_flow",
+          "tests.test_runtime_paths"
+        ],
+        "batch": "existing",
+        "returncode": 0,
+        "test_count": 108,
+        "unittest_seconds": 123.548,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "elapsed_seconds": 124.289,
+        "log": "test-results-v13-existing.txt",
+        "log_sha256": "af9cbc0c958969d51cc7fdbbb9e259a17c80a5e1d23eeb4f40b6204c6289af33",
+        "counts_by_module": {
+          "tests.test_v11_dates": 13,
+          "tests.test_v11_filters_reports": 13,
+          "tests.test_v11_native": 3,
+          "tests.test_portfolio": 18,
+          "tests.test_files_backup": 17,
+          "tests.test_database_lock": 5,
+          "tests.test_gui": 3,
+          "tests.test_preview_regression": 13,
+          "tests.test_reviewed_validation": 12,
+          "tests.test_reviewed_compatibility": 4,
+          "tests.test_reviewed_flow": 3,
+          "tests.test_runtime_paths": 4
+        }
+      }
+    ],
+    "repeat_runs_not_added": true,
+    "mocked_failure_tracebacks_in_logs_are_expected": true
+  },
+  "native_flow": {
+    "evidence": "v13-native-evidence.json",
+    "sha256": "ad4851b11ae7cfda08d0d259d2b19b13210ff2c64afa4db2fd463960463a7fc9",
+    "separate_from_unittest_count": true,
+    "six_pages_and_about": true,
+    "healthy_materials": 4,
+    "simulated_missing_and_changed": {
+      "missing": 1,
+      "changed": 1
+    },
+    "json_export_matches_result": true,
+    "original_demo_unchanged": true,
+    "real_and_demo_markers_preserved_after_close_reopen": true
+  },
+  "screenshots": {
+    "file_count": 14,
+    "distinct_png_sha256_count": 13,
+    "method": "Actual native Qt widget.grab; local-path status label hidden only",
+    "files": [
+      {
+        "file": "screenshots/v13-about.png",
+        "width": 580,
+        "height": 370,
+        "sha256": "28e510d93785b8e16976d3af0827c01783dadf0c8e40ac79baa6b4748f573e00",
+        "source": "isolated demo native capture"
+      },
+      {
+        "file": "screenshots/v13-achievement-dates.png",
+        "width": 1366,
+        "height": 768,
+        "sha256": "2ac00173be653026df39497dbbf6b2932ea83f432cb23f6562b5957f0687d1dd",
+        "source": "inherited native test batch"
+      },
+      {
+        "file": "screenshots/v13-achievements.png",
+        "width": 1366,
+        "height": 768,
+        "sha256": "32e75116fd16037a1199a58e30c85ec6eecbb9e0904edff38d53cbccfa58ff03",
+        "source": "isolated demo native capture"
+      },
+      {
+        "file": "screenshots/v13-backup-guide.png",
+        "width": 1366,
+        "height": 768,
+        "sha256": "45d53e78c70b08c8f2b1f230b74c2a4bd2fe85a9cf68d29f8b191eddfcb0c62b",
+        "source": "inherited native test batch"
+      },
+      {
+        "file": "screenshots/v13-calendar.png",
+        "width": 340,
+        "height": 291,
+        "sha256": "a53898f0b5a98ee0ca9b4a77d960633038720359651b99bdcc2b491b11da9e51",
+        "source": "inherited native test batch"
+      },
+      {
+        "file": "screenshots/v13-dashboard.png",
+        "width": 1366,
+        "height": 768,
+        "sha256": "85f0a24b2b5d7c362524b49bf072d99ab7231dacacd566dda8d07c99d00583e0",
+        "source": "isolated demo native capture"
+      },
+      {
+        "file": "screenshots/v13-date-form.png",
+        "width": 560,
+        "height": 485,
+        "sha256": "1be8558ce1825a49ed7876b0226d2f9596a2df049b4ee0b6b00bd3500e73cf94",
+        "source": "inherited native test batch"
+      },
+      {
+        "file": "screenshots/v13-integrity-anomalies.png",
+        "width": 950,
+        "height": 540,
+        "sha256": "a46a0b9e1962735d878eae0a6940efca6a48aa99915800e73ad201ad88a2923d",
+        "source": "isolated demo native capture"
+      },
+      {
+        "file": "screenshots/v13-integrity-healthy.png",
+        "width": 950,
+        "height": 540,
+        "sha256": "7b01a54f93c028b39ee5ffaefbaa8c2828b20e54e9edfd43fe37e6b36353ddd0",
+        "source": "isolated demo native capture"
+      },
+      {
+        "file": "screenshots/v13-materials.png",
+        "width": 1366,
+        "height": 768,
+        "sha256": "1699a32f43ecddcbf989ce3c801cd68cbf2e264780bdb420f14bf06b3c33fc7a",
+        "source": "isolated demo native capture"
+      },
+      {
+        "file": "screenshots/v13-projects.png",
+        "width": 1366,
+        "height": 768,
+        "sha256": "5aefe248eede83ca5cf7b0d7570282ce80f80ea12785f04ec4c4ba88dcf0e0f1",
+        "source": "isolated demo native capture"
+      },
+      {
+        "file": "screenshots/v13-reports.png",
+        "width": 1366,
+        "height": 768,
+        "sha256": "45d53e78c70b08c8f2b1f230b74c2a4bd2fe85a9cf68d29f8b191eddfcb0c62b",
+        "source": "isolated demo native capture"
+      },
+      {
+        "file": "screenshots/v13-task-filter.png",
+        "width": 1366,
+        "height": 768,
+        "sha256": "8d5e3c0bbb1c9bf54e535f41dc79c61cfa6dcf587425ccd6e41806660785f844",
+        "source": "inherited native test batch"
+      },
+      {
+        "file": "screenshots/v13-tasks.png",
+        "width": 1366,
+        "height": 768,
+        "sha256": "93c551ba69e7a9a093ca27f19301dffeb6557e90fffd5fcc562291bc8e66d4ef",
+        "source": "isolated demo native capture"
+      }
+    ]
+  },
+  "compatibility_and_regression": {
+    "original_v1_backup_restored": "Passed in tests.test_reviewed_flow and tests.test_reviewed_compatibility",
+    "preview_protection_and_backup_restore": "Passed in inherited tests and native six-page flow",
+    "leader_and_config_validation": "Passed in inherited tests plus V1.3 config regressions",
+    "schema_and_backup_format": 1
+  },
+  "not_verified": [
+    "Native file-picker interaction (selections patched in tests)",
+    "Saving changes in a real external editor",
+    "Packaged installer/uninstaller wizard",
+    "Task due-filter mouse popup (native keyboard route verified)",
+    "Multiple other computers and display scales"
+  ]
+}

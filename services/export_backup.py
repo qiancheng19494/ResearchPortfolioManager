@@ -17,7 +17,8 @@ import zipfile
 from uuid import UUID
 
 from database.store import Store, SCHEMA_VERSION, DEFAULT_CONFIG, validate_config
-from services.materials import MaterialService, ALLOWED_EXTENSIONS, safe_relative_path, sha256_file
+from services.materials import (MaterialService, ALLOWED_EXTENSIONS, safe_relative_path,
+                                sha256_file, _unsafe_windows_component)
 from services.portfolio import PortfolioService
 
 LOGGER = logging.getLogger(__name__)
@@ -26,8 +27,6 @@ BACKUP_FORMAT_VERSION = 1
 DB_ENTRY = 'portfolio.sqlite3'
 CONFIG_ENTRY = 'config/settings.json'
 HASH_PATTERN = re.compile(r'^[0-9a-f]{64}$')
-WINDOWS_RESERVED = {'CON', 'PRN', 'AUX', 'NUL', *(f'COM{i}' for i in range(1, 10)),
-                    *(f'LPT{i}' for i in range(1, 10))}
 
 
 def csv_safe(value):
@@ -63,9 +62,28 @@ class ExportBackupService:
                      *(Path(str(self.store.db_path) + suffix) for suffix in ('-journal', '-wal', '-shm')),
                      self.store.root / 'materials',
                      self.store.root / 'config', self.store.root / 'logs', self.store.root / 'preview_cache']
-        if any(path == item or path.is_relative_to(item) for item in protected):
+        if any(path == item or path.is_relative_to(item) for item in
+               (protected_path.resolve() for protected_path in protected)):
             raise ValueError('不能将导出或备份写入数据库、配置、日志、预览缓存或受管理材料位置。')
         return path
+
+    def export_integrity_report(self, destination, report) -> Path:
+        """Save the completed check without changing archived records or files."""
+        if not isinstance(report, dict):
+            raise ValueError('材料体检报告必须为对象。')
+        path = self._destination(destination)
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', dir=path.parent,
+                                             prefix='.integrity-', suffix='.tmp',
+                                             delete=False) as stream:
+                temporary = Path(stream.name)
+                json.dump(report, stream, ensure_ascii=False, indent=2, allow_nan=False)
+            temporary.replace(path)
+            return path
+        finally:
+            if temporary is not None:
+                temporary.unlink(missing_ok=True)
 
     def export_csv(self, destination, project_id=None, type='', status='') -> Path:
         path = self._destination(destination)
@@ -123,7 +141,7 @@ class ExportBackupService:
         output = f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><title>{escaped(project['name'])} — 项目摘要</title>
 <style>body{{font-family:"Microsoft YaHei",sans-serif;max-width:1200px;margin:32px auto;padding:0 20px;color:#24334b}}table{{border-collapse:collapse;width:100%;font-size:14px}}th,td{{border:1px solid #cbd5e1;padding:9px;vertical-align:top;overflow-wrap:anywhere;white-space:pre-wrap}}th{{background:#edf3fa}}dt{{font-weight:bold;float:left;width:110px}}dd{{margin-left:120px;margin-bottom:8px}}p{{white-space:pre-wrap}}.notice{{background:#fff0b3;padding:12px}}</style></head>
-<body><h1>{escaped(project['name'])}</h1>{demo}<p>本科科研项目与成果档案管理系统 V1.2 · 项目摘要</p>
+<body><h1>{escaped(project['name'])}</h1>{demo}<p>本科科研项目与成果档案管理系统 V1.3 · 项目摘要</p>
 <p>归档状态：{'已归档' if project['archived'] else '未归档'}</p><dl>{metadata}</dl>
 <h2>项目简介</h2><p>{escaped(project.get('description'))}</p>
 <h2>项目备注</h2><p>{escaped(project.get('notes'))}</p>{sections}
@@ -201,9 +219,7 @@ class ExportBackupService:
             raise ValueError('备份包含危险路径。')
         parts = PurePosixPath(name).parts
         if (PurePosixPath(name).is_absolute() or not parts or str(PurePosixPath(name)) != name or
-                any(part in {'.', '..'} or ':' in part or '\x00' in part or
-                    any(ch in part for ch in '<>"|?*') or part.endswith((' ', '.')) or
-                    part.split('.')[0].upper() in WINDOWS_RESERVED for part in parts)):
+                any(part in {'.', '..'} or _unsafe_windows_component(part) for part in parts)):
             raise ValueError('备份包含危险或不兼容的归档路径。')
         return name
 
@@ -264,10 +280,14 @@ class ExportBackupService:
     def restore(self, archive, target) -> Path:
         archive = Path(archive).expanduser().resolve(strict=True)
         requested = Path(target).expanduser()
-        if requested.is_symlink():
-            raise ValueError('恢复目标不能是符号链接。')
+        try:
+            attributes = getattr(requested.lstat(), 'st_file_attributes', 0)
+        except FileNotFoundError:
+            attributes = 0
+        if requested.is_symlink() or attributes & getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0x400):
+            raise ValueError('恢复目标不能是符号链接或目录联接。')
         target = requested.resolve()
-        if target == self.store.root or any(target.is_relative_to(self.store.root / part)
+        if target == self.store.root.resolve() or any(target.is_relative_to((self.store.root / part).resolve())
                                             for part in ('materials', 'config', 'logs', 'preview_cache')):
             raise ValueError('不能恢复到当前资料库或其受管理目录。')
         if not target.parent.is_dir():

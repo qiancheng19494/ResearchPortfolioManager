@@ -4,7 +4,9 @@ ResearchPortfolioManager 是面向个人的本地 Windows 桌面工具，用于�
 
 V1.1 在独立升级副本中改进三个现有操作：日期日历选择与清空、任务到期快捷筛选、备份恢复指引。保留六页、SQLite schema 1、成果类型状态规则、项目归档只读、材料版本管理，以及 Reviewed 的材料预览保护、负责人必填和统一配置校验。原 V1.0 与 Reviewed 交付保留。
 
-本版同时接续公开仓库 v1.0.2 的运行目录及打包维护规则；未将私人资料或本机依赖环境作为公开源码。V1.1 已上传 GitHub，Windows v1.1.0 安装版与便携版已构建并发布。[下载安装包或便携版](https://github.com/qiancheng19494/ResearchPortfolioManager/releases/tag/v1.1.0)，同页提供 `SHA256SUMS.txt`。远端 70 项测试及打包 EXE 初始化烟测通过；安装/卸载向导和打包后完整 GUI 流程尚未实际操作。仓库原有 v1.0.2 安装包保留原版本身份，不能当作 V1.1 安装包使用。
+本版同时接续公开仓库 v1.0.2 的运行目录及打包维护规则；未将私人资料或本机依赖环境作为公开源码。V1.1 已上传 GitHub，[Windows v1.1.0 安装版与便携版](https://github.com/qiancheng19494/ResearchPortfolioManager/releases/tag/v1.1.0) 已完成纠正构建和发布，同页提供校验清单。最终构建 70 项测试（34.088 秒，0 失败/0 跳过）、打包演示四材料大小/SHA-256 及 EXE 初始化烟测通过。安装/卸载向导和打包后完整 GUI 流程尚未实际操作；旧 v1.0.x 发布保留。
+
+交付检查曾发现公开准备的换行转换误改四份受管理演示材料，首轮资产不能作为最终合格包；本地源码目录及当时 ZIP 的材料正常。现已上传正确原字节并替换同版公开资产，数据库旧哈希未改，完整经过见 [发布结果](docs/V1.1发布结果.md)。
 
 ## 安装与启动
 
@@ -79,6 +81,6 @@ V1.1 保持 schema 1 和既有备份格式，旧版兼容的本轮实测结果�
 - [项目状态](PROJECT_STATUS.md)
 - [第三方说明](THIRD_PARTY_NOTICES.md)
 
-公开仓库：[qiancheng19494/ResearchPortfolioManager](https://github.com/qiancheng19494/ResearchPortfolioManager)。[功能提交](https://github.com/qiancheng19494/ResearchPortfolioManager/commit/f02ee895588898f9ba8def5bf2986353ba03f787)、[成功的 Actions](https://github.com/qiancheng19494/ResearchPortfolioManager/actions/runs/39011393460) 和 [发布结果](docs/V1.1发布结果.md) 可核对本轮上传；旁置回执保存交付核对信息。
+公开仓库：[qiancheng19494/ResearchPortfolioManager](https://github.com/qiancheng19494/ResearchPortfolioManager)。[功能提交](https://github.com/qiancheng19494/ResearchPortfolioManager/commit/f02ee895588898f9ba8def5bf2986353ba03f787)、[最终交付材料纠正提交](https://github.com/qiancheng19494/ResearchPortfolioManager/commit/186c7e2189f3ca81ea4ba541425da56487f94b47) 与 [成功的纠正构建 Actions](https://github.com/qiancheng19494/ResearchPortfolioManager/actions/runs/39012314381) 分别记录。`v1.1.0` 标签对应纠正提交；[发布结果](docs/V1.1发布结果.md) 和旁置回执记录实际证据，后续文档提交不充当应用构建证据。
 
 代码、测试和文档由 Codex AI 辅助完成，人工贡献、署名和权属仍由本人据实确认。本轮不制作、签署或提交登记申请资料，不承诺登记结果。

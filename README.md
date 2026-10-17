@@ -4,7 +4,7 @@ ResearchPortfolioManager 是本地 Windows 桌面工具，用于管理科研项�
 
 ## 安装与启动
 
-Windows 安装版运行 Setup，安装后从快捷方式启动。便携版解压后运行 `ResearchPortfolioManager.exe`。本轮安装包状态见 [发布结果](docs/V1.2发布结果.md)，发布完成前不以旧版资产代替本版。
+Windows 安装版运行 Setup，安装后从快捷方式启动。便携版解压后运行 `ResearchPortfolioManager.exe`。[v1.2.0 下载页](https://github.com/qiancheng19494/ResearchPortfolioManager/releases/tag/v1.2.0) 已发布安装版、便携版和 SHA256SUMS.txt；具体证据见 [发布结果](docs/V1.2发布结果.md)。
 
 源码需要 Python 3.11。在源码目录打开 PowerShell：
 
@@ -43,7 +43,9 @@ powershell -ExecutionPolicy Bypass -File .\run.ps1 -DataDir .\demo_data
 & .\.venv\Scripts\python.exe -B -m unittest discover -s tests -v
 ```
 
-本轮测试与发布状态以 [验证报告](docs/验证报告.md)、[验收清单](docs/V1.2验收清单.md) 和 [发布结果](docs/V1.2发布结果.md) 为准。旧版备份兼容测试需要相邻原版源码，缺少时会明确跳过，不能计为通过。
+本机 **108 个不同测试首轮通过，失败/错误/跳过均为 0**；远端 Windows 70 项重复回归通过，打包演示四材料大小/SHA-256、EXE 初始化烟测和安装包编译通过。六页、本版 12 张真实截图、关闭重开及 V1.0/V1.1 实际备份恢复已检查。远端重复测试不累计到 108 项。
+
+范围以 [验证报告](docs/验证报告.md)、[验收清单](docs/V1.2验收清单.md) 和 [发布结果](docs/V1.2发布结果.md) 为准。安装/卸载向导和真实外部编辑器保存未实际操作。旧版备份兼容测试需要相邻原版源码，缺少时会明确跳过，不能计为通过。
 
 - [使用说明](docs/使用说明.md)
 - [设计说明](docs/设计说明.md)

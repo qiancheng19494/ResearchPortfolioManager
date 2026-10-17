@@ -77,35 +77,35 @@ jobs:
           New-Item -ItemType Directory -Force -Path release | Out-Null
           & $compiler packaging/ResearchPortfolioManager.iss
           if ($LASTEXITCODE -ne 0) { throw 'Inno Setup compilation failed' }
-          if (!(Test-Path release/ResearchPortfolioManager_v1.1.0_Windows_Setup.exe)) { throw 'Installer missing' }
+          if (!(Test-Path release/ResearchPortfolioManager_v1.2.0_Windows_Setup.exe)) { throw 'Installer missing' }
       - name: Produce portable ZIP and SHA-256 manifest
         shell: pwsh
         run: |
-          Compress-Archive -Path dist/ResearchPortfolioManager -DestinationPath release/ResearchPortfolioManager_v1.1.0_Windows_Portable.zip -CompressionLevel Optimal -Force
+          Compress-Archive -Path dist/ResearchPortfolioManager -DestinationPath release/ResearchPortfolioManager_v1.2.0_Windows_Portable.zip -CompressionLevel Optimal -Force
           $items = Get-ChildItem release -File | Where-Object { $_.Extension -in @('.exe','.zip') }
           $lines = foreach ($item in $items) { (Get-FileHash -Algorithm SHA256 -LiteralPath $item.FullName).Hash.ToLowerInvariant() + '  ' + $item.Name }
           $lines | Set-Content release/SHA256SUMS.txt -Encoding ascii
           Get-Content release/SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: ResearchPortfolioManager-v1.1.0-Windows
+          name: ResearchPortfolioManager-v1.2.0-Windows
           path: |
             release/*.exe
             release/*.zip
             release/SHA256SUMS.txt
           if-no-files-found: error
-      - name: Publish v1.1.0 release
+      - name: Publish v1.2.0 release
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $tag = 'v1.1.0'
+          $tag = 'v1.2.0'
           gh release view $tag --repo $env:GITHUB_REPOSITORY 2>&1 | Out-Null
           if ($LASTEXITCODE -eq 0) {
             gh api --method PATCH "repos/$env:GITHUB_REPOSITORY/git/refs/tags/$tag" -f "sha=$env:GITHUB_SHA" -F force=false
             if ($LASTEXITCODE -ne 0) { throw 'Release tag fast-forward failed' }
-            gh release upload $tag release/ResearchPortfolioManager_v1.1.0_Windows_Setup.exe release/ResearchPortfolioManager_v1.1.0_Windows_Portable.zip release/SHA256SUMS.txt --clobber --repo $env:GITHUB_REPOSITORY
+            gh release upload $tag release/ResearchPortfolioManager_v1.2.0_Windows_Setup.exe release/ResearchPortfolioManager_v1.2.0_Windows_Portable.zip release/SHA256SUMS.txt --clobber --repo $env:GITHUB_REPOSITORY
           } else {
-            gh release create $tag release/ResearchPortfolioManager_v1.1.0_Windows_Setup.exe release/ResearchPortfolioManager_v1.1.0_Windows_Portable.zip release/SHA256SUMS.txt --target $env:GITHUB_SHA --title 'ResearchPortfolioManager v1.1.0 — Windows installer' --notes-file packaging/RELEASE_NOTES.md --latest --repo $env:GITHUB_REPOSITORY
+            gh release create $tag release/ResearchPortfolioManager_v1.2.0_Windows_Setup.exe release/ResearchPortfolioManager_v1.2.0_Windows_Portable.zip release/SHA256SUMS.txt --target $env:GITHUB_SHA --title 'ResearchPortfolioManager v1.2.0 — Windows installer' --notes-file packaging/RELEASE_NOTES.md --latest --repo $env:GITHUB_REPOSITORY
           }
           if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }

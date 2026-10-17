@@ -1,7 +1,7 @@
 {
   "client_date": "2026-10-17",
   "timezone": "Asia/Shanghai",
-  "started_utc": "2026-10-17T06:37:47.239986+00:00",
+  "started_utc": "2026-10-17T12:07:16.658620+00:00",
   "python": "3.11.9",
   "pyside6": "6.10.3",
   "sqlite": "3.45.1",
@@ -15,8 +15,11 @@
   "batch": "new",
   "returncode": 0,
   "test_count": 29,
-  "unittest_seconds": 10.909,
-  "elapsed_seconds": 11.329
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "unittest_seconds": 18.876,
+  "elapsed_seconds": 19.335
 }
 
 test_calendar_starts_at_existing_date_without_writing (tests.test_v11_dates.DateFieldTests.test_calendar_starts_at_existing_date_without_writing) ... ok
@@ -41,10 +44,10 @@ test_leap_day_and_year_transition_boundaries (tests.test_v11_filters_reports.Due
 test_backup_success_includes_independent_restore_advice (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_backup_success_includes_independent_restore_advice) ... ok
 test_failed_backup_does_not_keep_old_success (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_failed_backup_does_not_keep_old_success) ... 后台操作失败
 Traceback (most recent call last):
-  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\workers.py", line 15, in run
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.2\app\workers.py", line 15, in run
     self.succeeded.emit(self.function())
                         ^^^^^^^^^^^^^^^
-  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\pages.py", line 650, in <lambda>
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.2\app\pages.py", line 650, in <lambda>
     self.owner.run_job("正在创建数据库快照、复制材料并校验备份…", lambda: self.owner.exports.backup(path), lambda output: self.saved("完整备份成功", output, "建议将此备份恢复到独立空目录，关闭软件后重启核对，再确认备份可用。"))
                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1124, in __call__
@@ -59,13 +62,13 @@ OSError: 隔离模拟写入失败
 ok
 test_failed_restore_clears_stale_success_and_keeps_nonempty_target (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_failed_restore_clears_stale_success_and_keeps_nonempty_target) ... 后台操作失败
 Traceback (most recent call last):
-  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\workers.py", line 15, in run
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.2\app\workers.py", line 15, in run
     self.succeeded.emit(self.function())
                         ^^^^^^^^^^^^^^^
-  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\pages.py", line 662, in <lambda>
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.2\app\pages.py", line 662, in <lambda>
     self.owner.run_job("正在验证备份并恢复到新目录…", lambda: self.owner.exports.restore(archive, target), self.restored)
                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 276, in restore
+  File "<WORKSPACE>\outputs\ResearchPortfolioManager_V1.2\services\export_backup.py", line 276, in restore
     raise ValueError('恢复只允许新建或空目录，不能覆盖已有资料。')
 ValueError: 恢复只允许新建或空目录，不能覆盖已有资料。
 ok
@@ -78,6 +81,6 @@ test_native_six_pages_date_range_and_real_backup_restore_guidance (tests.test_v1
 test_native_task_due_selector_intersections_and_reset (tests.test_v11_native.V11NativeTests.test_native_task_due_selector_intersections_and_reset) ... ok
 
 ----------------------------------------------------------------------
-Ran 29 tests in 10.909s
+Ran 29 tests in 18.876s
 
 OK

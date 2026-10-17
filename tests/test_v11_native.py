@@ -1,4 +1,4 @@
-"""Native V1.1 UI checks. File pickers are controlled; external editors are not checked."""
+"""Native V1.2 UI checks. File pickers are controlled; external editors are not checked."""
 from datetime import date, timedelta
 from pathlib import Path
 import unittest
@@ -52,7 +52,7 @@ class V11NativeTests(unittest.TestCase):
     def test_native_calendar_confirm_cancel_clear_and_null_reopen(self):
         self.assertEqual(self.application.platformName(), 'windows')
         dialog = ProjectDialog(self.window)
-        dialog.fields['name'].setText('【演示】V1.1 日历项目')
+        dialog.fields['name'].setText('【演示】V1.2 日历项目')
         dialog.show()
         self.assertTrue(QTest.qWaitForWindowExposed(dialog, 5000))
         field = dialog.fields['start_date']
@@ -68,7 +68,7 @@ class V11NativeTests(unittest.TestCase):
                 self.choose_day(current, day)
                 self.assertEqual(current.calendar.selectedDate(), QDate(2028, 2, day))
                 if screenshot:
-                    self.capture('v11-calendar.png', current)
+                    self.capture('v12-calendar.png', current)
                 button = current.select_button if confirm else current.buttons.button(QDialogButtonBox.Cancel)
                 self.click(button)
             except BaseException as exc:
@@ -89,7 +89,7 @@ class V11NativeTests(unittest.TestCase):
         dialog.fields['end_date'].setText('2028-03-01')
         self.click(dialog.fields['end_date'].clear_button)
         self.assertEqual(dialog.fields['end_date'].text(), '')
-        self.capture('v11-date-form.png', dialog)
+        self.capture('v12-date-form.png', dialog)
         self.click(dialog.save_button)
         self.assertEqual(dialog.result(), QDialog.Accepted)
         project = self.window.portfolio.list_projects()[0]
@@ -102,7 +102,7 @@ class V11NativeTests(unittest.TestCase):
         dialog.deleteLater()
 
     def test_native_task_due_selector_intersections_and_reset(self):
-        pid = self.window.portfolio.save_project({'name': '【演示】V1.1 任务筛选'})
+        pid = self.window.portfolio.save_project({'name': '【演示】V1.2 任务筛选'})
         current = date.today()
         for label, offset in [('昨天', -1), ('今天', 0), ('明天', 1), ('第七天', 7), ('第八天', 8)]:
             self.window.portfolio.save_task({'project_id': pid, 'title': f'【演示】{label}',
@@ -120,7 +120,7 @@ class V11NativeTests(unittest.TestCase):
             self.assertEqual(page.due_filter.currentData(), key)
             self.assertEqual(page.table.rowCount(), expected)
         page.due_filter.setCurrentIndex(page.due_filter.findData('today'))
-        self.capture('v11-task-filter.png')
+        self.capture('v12-task-filter.png')
         self.click(page.reset_button)
         self.assertEqual(page.due_filter.currentData(), '')
         self.assertEqual(page.table.rowCount(), 6)
@@ -129,8 +129,8 @@ class V11NativeTests(unittest.TestCase):
     def test_native_six_pages_date_range_and_real_backup_restore_guidance(self):
         for key in ('dashboard', 'projects', 'tasks', 'achievements', 'materials', 'reports'):
             self.navigate(key)
-        self.assertIn('V1.1', self.window.windowTitle())
-        pid = self.window.portfolio.save_project({'name': '【演示】V1.1 备份核对'})
+        self.assertIn('V1.2', self.window.windowTitle())
+        pid = self.window.portfolio.save_project({'name': '【演示】V1.2 备份核对'})
         aid = self.window.portfolio.save_achievement({'project_id': pid, 'name': '【演示】范围筛选',
                                                     'related_date': '2028-02-15'})
         page = self.navigate('achievements')
@@ -144,15 +144,15 @@ class V11NativeTests(unittest.TestCase):
         self.click(page.date_to.clear_button)
         self.click(page.search_button)
         self.assertEqual(page.table.rowCount(), 1)
-        self.capture('v11-achievement-dates.png')
+        self.capture('v12-achievement-dates.png')
         reports = self.navigate('reports')
-        self.capture('v11-backup-guide.png')
-        archive = self.base / 'V1.1 完整备份.zip'
+        self.capture('v12-backup-guide.png')
+        archive = self.base / 'V1.2 完整备份.zip'
         with patch('app.pages.QFileDialog.getSaveFileName', return_value=(str(archive), '')):
             self.click(reports.backup_button)
         self.wait_job()
         self.assertTrue(archive.is_file())
-        target = self.base / 'V1.1 恢复目录'
+        target = self.base / 'V1.2 恢复目录'
         target.mkdir()
         with patch('app.pages.QFileDialog.getOpenFileName', return_value=(str(archive), '')), \
                 patch('app.pages.QFileDialog.getExistingDirectory', return_value=str(target)), \

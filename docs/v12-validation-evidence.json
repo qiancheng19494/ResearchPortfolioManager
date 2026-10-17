@@ -1,0 +1,207 @@
+{
+  "version": "V1.2",
+  "client_date": "2026-10-17",
+  "timezone": "Asia/Shanghai",
+  "batches": [
+    {
+      "client_date": "2026-10-17",
+      "timezone": "Asia/Shanghai",
+      "started_utc": "2026-10-17T12:07:16.658620+00:00",
+      "python": "3.11.9",
+      "pyside6": "6.10.3",
+      "sqlite": "3.45.1",
+      "platform": "Windows-10-10.0.26100-SP0",
+      "qt_platform": "native Windows",
+      "modules": [
+        "tests.test_v11_dates",
+        "tests.test_v11_filters_reports",
+        "tests.test_v11_native"
+      ],
+      "batch": "new",
+      "returncode": 0,
+      "test_count": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "unittest_seconds": 18.876,
+      "elapsed_seconds": 19.335
+    },
+    {
+      "client_date": "2026-10-17",
+      "timezone": "Asia/Shanghai",
+      "started_utc": "2026-10-17T12:07:43.530134+00:00",
+      "python": "3.11.9",
+      "pyside6": "6.10.3",
+      "sqlite": "3.45.1",
+      "platform": "Windows-10-10.0.26100-SP0",
+      "qt_platform": "native Windows",
+      "modules": [
+        "tests.test_portfolio",
+        "tests.test_files_backup",
+        "tests.test_database_lock",
+        "tests.test_gui",
+        "tests.test_preview_regression",
+        "tests.test_reviewed_validation",
+        "tests.test_reviewed_compatibility",
+        "tests.test_reviewed_flow",
+        "tests.test_runtime_paths"
+      ],
+      "batch": "existing",
+      "returncode": 0,
+      "test_count": 79,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "unittest_seconds": 53.932,
+      "elapsed_seconds": 54.386
+    }
+  ],
+  "unique_unittest_count": 108,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "attempts_this_round": 1,
+  "test_log_paths": [
+    "docs/test-results-v12-new.txt",
+    "docs/test-results-v12-existing.txt"
+  ],
+  "expected_negative_case_logs": "Passing negative tests deliberately log rejected inputs, failed simulated backups, or rejected restores; these are not test failures.",
+  "path_redaction": "Workspace prefix replaced by <WORKSPACE>; test facts unchanged.",
+  "isolated_native_flow_and_screenshots": {
+    "client_date": "2026-10-17",
+    "timezone": "Asia/Shanghai",
+    "captured_utc": "2026-10-17T12:08:59.637160+00:00",
+    "qt_platform": "windows",
+    "capture_method": "Real native Qt widget.grab; only the local-path status label hidden",
+    "data": "Isolated temporary copy of delivered synthetic demo_data",
+    "six_pages": true,
+    "about_visible": true,
+    "demo_true_visible": true,
+    "real_false_banner_hidden": true,
+    "closed_reopened_demo_config_and_record_counts_preserved": true,
+    "closed_reopened_real_demo_false_preserved": true,
+    "source_demo_unchanged": true,
+    "record_counts": {
+      "projects": 2,
+      "tasks": 4,
+      "achievements": 2,
+      "materials": 4
+    },
+    "screenshots": [
+      "v12-dashboard.png",
+      "v12-projects.png",
+      "v12-tasks.png",
+      "v12-achievements.png",
+      "v12-materials.png",
+      "v12-reports.png",
+      "v12-about.png"
+    ],
+    "not_unittest_cases": true
+  },
+  "screenshots": [
+    {
+      "path": "docs/screenshots/v12-about.png",
+      "width": 580,
+      "height": 370,
+      "size": 22126,
+      "sha256": "017f1e790ed6de483822678f73c472eba8db0c813b53ba051036682fc8b4dc2d"
+    },
+    {
+      "path": "docs/screenshots/v12-achievement-dates.png",
+      "width": 1366,
+      "height": 768,
+      "size": 61380,
+      "sha256": "7cbdf9884ee9c6688a0b360af606d90dd59c9c115e921a5f87838d5ffe0a02f5"
+    },
+    {
+      "path": "docs/screenshots/v12-achievements.png",
+      "width": 1366,
+      "height": 768,
+      "size": 64814,
+      "sha256": "5b872f36af68f69448b37dc5326b191c213fdd693949921fed6527d819a8e9a7"
+    },
+    {
+      "path": "docs/screenshots/v12-backup-guide.png",
+      "width": 1366,
+      "height": 768,
+      "size": 83897,
+      "sha256": "19d72e3b42c99ddb4e4c242530823d8cb3f68a0470c0cce237cd6f290be7ce8a"
+    },
+    {
+      "path": "docs/screenshots/v12-calendar.png",
+      "width": 340,
+      "height": 291,
+      "size": 13563,
+      "sha256": "a53898f0b5a98ee0ca9b4a77d960633038720359651b99bdcc2b491b11da9e51"
+    },
+    {
+      "path": "docs/screenshots/v12-dashboard.png",
+      "width": 1366,
+      "height": 768,
+      "size": 70554,
+      "sha256": "f2cc8df2c7e5de1c6244b19f3be809cbda94269a99cc452fcc07ab3bbfabe710"
+    },
+    {
+      "path": "docs/screenshots/v12-date-form.png",
+      "width": 560,
+      "height": 485,
+      "size": 23547,
+      "sha256": "6e562272b5b959186459dcecb87dd8f05ce2b1bbef92f7a918388cb57deadd75"
+    },
+    {
+      "path": "docs/screenshots/v12-materials.png",
+      "width": 1366,
+      "height": 768,
+      "size": 73237,
+      "sha256": "d060ee7a41370ff20ab697b2a56e16e5a8006f78659eafdb20ba8213ef623bdf"
+    },
+    {
+      "path": "docs/screenshots/v12-projects.png",
+      "width": 1366,
+      "height": 768,
+      "size": 62330,
+      "sha256": "1d45875234e89ec9139548949eb3648662de1feaf84067948c1916b0c9f8c321"
+    },
+    {
+      "path": "docs/screenshots/v12-reports.png",
+      "width": 1366,
+      "height": 768,
+      "size": 83897,
+      "sha256": "19d72e3b42c99ddb4e4c242530823d8cb3f68a0470c0cce237cd6f290be7ce8a"
+    },
+    {
+      "path": "docs/screenshots/v12-task-filter.png",
+      "width": 1366,
+      "height": 768,
+      "size": 55898,
+      "sha256": "5be1233d59cbdc30af3cc211302892c910889ee8bc72448b70c6be64aac68983"
+    },
+    {
+      "path": "docs/screenshots/v12-tasks.png",
+      "width": 1366,
+      "height": 768,
+      "size": 68421,
+      "sha256": "6047e3d0beaf101ba77d04dd06500df88d21205cf856000b0711e828aa582b1c"
+    }
+  ],
+  "compatibility": {
+    "actual_original_v1_backup_generated_in_isolated_process": true,
+    "full_schema_records_links_material_hashes_and_config_restored": true,
+    "database_schema_version": 1
+  },
+  "preview_verification_scope": {
+    "actual_association_target_intercepted_and_simulated_save": true,
+    "archived_and_active_projects": true,
+    "managed_original_hash_and_bytes_unchanged": true,
+    "preview_modification_allows_full_backup_restore": true,
+    "real_external_editor_save": false
+  },
+  "not_verified": [
+    "Real external application edit/save operation",
+    "Manual installation/uninstallation wizard",
+    "Packaged V1.2 application on other computers",
+    "Task selector mouse popup on unattended desktop; keyboard route verified",
+    "Alt+Down focused real native keyboard interaction; direct shortcut-related read-only assertions are covered"
+  ],
+  "screenshots_are_not_additional_unittest_cases": true
+}

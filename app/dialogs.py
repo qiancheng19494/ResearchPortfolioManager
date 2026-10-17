@@ -371,7 +371,7 @@ class AboutDialog(QDialog):
         layout = QVBoxLayout(self)
         text = QTextEdit()
         text.setReadOnly(True)
-        text.setPlainText("本科科研项目与成果档案管理系统 V1.1\n内部项目名：ResearchPortfolioManager\n\n供本科生个人在本地管理科研项目、任务、成果和材料版本，支持检索、报告导出、完整备份与验证恢复。\n\n个人学习背景：示例学校、示例专业、本科。学校名称仅表示学习背景，不表示背书或合作关系。\n\n软件不认定成果真实性，不保证软件著作权登记结果。第三方依赖及许可见 THIRD_PARTY_NOTICES.md。")
+        text.setPlainText("本科科研项目与成果档案管理系统 V1.2\n内部项目名：ResearchPortfolioManager\n\n供本科生个人在本地管理科研项目、任务、成果和材料版本，支持检索、报告导出、完整备份与验证恢复。\n\n个人学习背景：示例学校、示例专业、本科。学校名称仅表示学习背景，不表示背书或合作关系。\n\n软件不认定成果真实性，不保证软件著作权登记结果。第三方依赖及许可见 THIRD_PARTY_NOTICES.md。")
         layout.addWidget(text)
         close = QDialogButtonBox(QDialogButtonBox.Close)
         close.button(QDialogButtonBox.Close).setText("关闭")

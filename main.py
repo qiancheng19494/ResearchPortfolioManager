@@ -14,7 +14,7 @@ from PySide6.QtWidgets import QApplication, QMessageBox
 from database.store import Store
 from runtime_paths import default_data_dir
 
-APP_NAME = '本科科研项目与成果档案管理系统 V1.1'
+APP_NAME = '本科科研项目与成果档案管理系统 V1.2'
 
 
 def main(argv=None):

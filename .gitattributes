@@ -1,0 +1,2 @@
+# Managed attachments must retain their exact archived bytes.
+demo_data/materials/** -text

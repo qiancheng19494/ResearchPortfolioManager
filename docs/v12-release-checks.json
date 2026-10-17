@@ -1,0 +1,16 @@
+{
+  "client_date": "2026-10-17",
+  "schema_unchanged_from_v11": true,
+  "schema_version": 1,
+  "v11_module_generated_backup_restored_by_v12": true,
+  "all_schema_records_and_links_exactly_preserved": true,
+  "managed_demo_materials_verified": 4,
+  "demo_files_byte_equal_to_v11": true,
+  "fresh_demo_false": true,
+  "restored_demo_true": true,
+  "entry_and_window_version_equal": "V1.2",
+  "real_data_used": false,
+  "html_export_version": "V1.2",
+  "harness_initial_cleanup_failure": "A verification-script SQLite connection remained open on Windows; explicit closing fixed the script cleanup. Product assertions had passed; final complete rerun passed.",
+  "checks_are_delivery_script_checks_not_additional_unittest": true
+}

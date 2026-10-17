@@ -4,7 +4,7 @@ ResearchPortfolioManager 是本地 Windows 桌面工具，用于管理科研项�
 
 ## 安装与启动
 
-安装版运行 Setup，便携版解压后运行 `ResearchPortfolioManager.exe`。本次发布状态见 [V1.3 发布结果](docs/V1.3发布结果.md)，未完成构建前不将预期产物视为已发布。
+安装版运行 Setup，便携版解压后运行 `ResearchPortfolioManager.exe`。[v1.3.0 下载页](https://github.com/qiancheng19494/ResearchPortfolioManager/releases/tag/v1.3.0) 已提供 Windows 安装版、便携版和 SHA256SUMS.txt，证据见 [V1.3 发布结果](docs/V1.3发布结果.md)。
 
 源码需要 Python 3.11。在源码目录打开 PowerShell：
 
@@ -51,7 +51,9 @@ powershell -ExecutionPolicy Bypass -File .\run.ps1 -DataDir .\demo_data
 
 V1.3 先运行新增 34 项，再复跑继承 108 项，**本机 142 个不同测试通过，失败 0、错误 0、跳过 0**。新增界面回归为 Qt offscreen，继承套件在 Windows 原生窗口环境执行；目录联接和硬链接使用真实 Windows 文件系统对象。原 V1.0 实际模块生成备份由本版恢复通过。
 
-隔离原生六页、体检与 JSON 导出、关闭重开、真实/演示标记和 V1.2 实际备份恢复已检查，保留 14 份本版真实截图文件（13 个不同图像）。远端构建发布结果见 [发布结果](docs/V1.3发布结果.md)；详细边界以 [验证报告](docs/验证报告.md) 和 [验收清单](docs/V1.3验收清单.md) 为准。旧版兼容用例需要相邻原版源码，缺少时会明确跳过。安装/卸载向导、真实外部编辑器保存及系统文件选择器交互未实际操作。
+隔离原生六页、体检与 JSON 导出、关闭重开、真实/演示标记和 V1.2 实际备份恢复已检查，保留 14 份本版真实截图文件（13 个不同图像）。远端 Windows 104 项重复回归通过，打包演示四材料、EXE 初始化烟测、安装包编译及发布成功；104 项不累计到本机 142 项。
+
+详细边界以 [验证报告](docs/验证报告.md)、[验收清单](docs/V1.3验收清单.md) 和 [发布结果](docs/V1.3发布结果.md) 为准。旧版兼容用例需要相邻原版源码，缺少时会明确跳过。安装/卸载向导、真实外部编辑器保存及系统文件选择器交互未实际操作。
 
 - [使用说明](docs/使用说明.md)
 - [设计说明](docs/设计说明.md)

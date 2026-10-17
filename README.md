@@ -4,7 +4,7 @@ ResearchPortfolioManager 是面向个人的本地 Windows 桌面工具，用于�
 
 V1.1 在独立升级副本中改进三个现有操作：日期日历选择与清空、任务到期快捷筛选、备份恢复指引。保留六页、SQLite schema 1、成果类型状态规则、项目归档只读、材料版本管理，以及 Reviewed 的材料预览保护、负责人必填和统一配置校验。原 V1.0 与 Reviewed 交付保留。
 
-本版同时接续公开仓库 v1.0.2 的运行目录及打包维护规则；未将私人资料或本机依赖环境作为公开源码。V1.1 的 Windows 安装包由既有 GitHub 工作流按 v1.1.0 构建发布；实际构建、烟测与下载状态以 Actions 和旁置上传回执为准。仓库原有 v1.0.2 安装包保留原版本身份，不能当作 V1.1 安装包使用。
+本版同时接续公开仓库 v1.0.2 的运行目录及打包维护规则；未将私人资料或本机依赖环境作为公开源码。V1.1 已上传 GitHub，Windows v1.1.0 安装版与便携版已构建并发布。[下载安装包或便携版](https://github.com/qiancheng19494/ResearchPortfolioManager/releases/tag/v1.1.0)，同页提供 `SHA256SUMS.txt`。远端 70 项测试及打包 EXE 初始化烟测通过；安装/卸载向导和打包后完整 GUI 流程尚未实际操作。仓库原有 v1.0.2 安装包保留原版本身份，不能当作 V1.1 安装包使用。
 
 ## 安装与启动
 
@@ -75,9 +75,10 @@ V1.1 保持 schema 1 和既有备份格式，旧版兼容的本轮实测结果�
 - [验证报告](docs/验证报告.md)
 - [V1.1 升级说明](docs/V1.1升级说明.md)
 - [V1.1 验收清单](docs/V1.1验收清单.md)
+- [V1.1 发布结果](docs/V1.1发布结果.md)
 - [项目状态](PROJECT_STATUS.md)
 - [第三方说明](THIRD_PARTY_NOTICES.md)
 
-公开仓库：[qiancheng19494/ResearchPortfolioManager](https://github.com/qiancheng19494/ResearchPortfolioManager)。上传提交、Actions 和安装包状态以最终回执为准。
+公开仓库：[qiancheng19494/ResearchPortfolioManager](https://github.com/qiancheng19494/ResearchPortfolioManager)。[功能提交](https://github.com/qiancheng19494/ResearchPortfolioManager/commit/f02ee895588898f9ba8def5bf2986353ba03f787)、[成功的 Actions](https://github.com/qiancheng19494/ResearchPortfolioManager/actions/runs/39011393460) 和 [发布结果](docs/V1.1发布结果.md) 可核对本轮上传；旁置回执保存交付核对信息。
 
 代码、测试和文档由 Codex AI 辅助完成，人工贡献、署名和权属仍由本人据实确认。本轮不制作、签署或提交登记申请资料，不承诺登记结果。

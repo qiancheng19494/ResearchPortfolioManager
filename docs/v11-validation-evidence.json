@@ -1,0 +1,150 @@
+{
+  "client_date": "2026-10-17",
+  "application_version": "V1.1",
+  "schema_sql_and_version_unchanged": true,
+  "schema_version": 1,
+  "backup_format_version": 1,
+  "preserved_deliveries": {
+    "review_original_hashes.json": {
+      "file_count": 69,
+      "all_hashes_unchanged": true
+    },
+    "v11-reviewed-preservation-baseline.json": {
+      "file_count": 80,
+      "all_hashes_unchanged": true
+    }
+  },
+  "real_user_data_absent": true,
+  "public_demo_counts": {
+    "projects": 2,
+    "tasks": 4,
+    "achievements": 2,
+    "materials": 4
+  },
+  "public_demo_all_material_hashes_verified": true,
+  "public_demo": true,
+  "real_default_demo": false,
+  "batches": {
+    "new": {
+      "client_date": "2026-10-17",
+      "timezone": "Asia/Shanghai",
+      "started_utc": "2026-10-17T06:37:47.239986+00:00",
+      "python": "3.11.9",
+      "pyside6": "6.10.3",
+      "sqlite": "3.45.1",
+      "platform": "Windows-10-10.0.26100-SP0",
+      "qt_platform": "native Windows",
+      "modules": [
+        "tests.test_v11_dates",
+        "tests.test_v11_filters_reports",
+        "tests.test_v11_native"
+      ],
+      "batch": "new",
+      "returncode": 0,
+      "test_count": 29,
+      "unittest_seconds": 10.909,
+      "elapsed_seconds": 11.329
+    },
+    "existing": {
+      "client_date": "2026-10-17",
+      "timezone": "Asia/Shanghai",
+      "started_utc": "2026-10-17T06:38:31.009197+00:00",
+      "python": "3.11.9",
+      "pyside6": "6.10.3",
+      "sqlite": "3.45.1",
+      "platform": "Windows-10-10.0.26100-SP0",
+      "qt_platform": "native Windows",
+      "modules": [
+        "tests.test_portfolio",
+        "tests.test_files_backup",
+        "tests.test_database_lock",
+        "tests.test_gui",
+        "tests.test_preview_regression",
+        "tests.test_reviewed_validation",
+        "tests.test_reviewed_compatibility",
+        "tests.test_reviewed_flow",
+        "tests.test_runtime_paths"
+      ],
+      "batch": "existing",
+      "returncode": 0,
+      "test_count": 79,
+      "unittest_seconds": 37.047,
+      "elapsed_seconds": 37.483
+    },
+    "ci": {
+      "client_date": "2026-10-17",
+      "timezone": "Asia/Shanghai",
+      "started_utc": "2026-10-17T06:40:09.164957+00:00",
+      "python": "3.11.9",
+      "pyside6": "6.10.3",
+      "sqlite": "3.45.1",
+      "platform": "Windows-10-10.0.26100-SP0",
+      "qt_platform": "offscreen",
+      "modules": [
+        "tests.test_runtime_paths",
+        "tests.test_portfolio",
+        "tests.test_files_backup",
+        "tests.test_database_lock",
+        "tests.test_v11_dates",
+        "tests.test_v11_filters_reports"
+      ],
+      "batch": "ci",
+      "returncode": 0,
+      "test_count": 70,
+      "unittest_seconds": 8.1,
+      "elapsed_seconds": 8.461
+    }
+  },
+  "unique_current_unittest_count": 108,
+  "final_batch_failures": 0,
+  "final_batch_skips": 0,
+  "ci_batch_repeats_existing_cases": true,
+  "old_backup_compatibility": "Actual original V1.0 fixture backup restored with exact schema, records, links and material hashes in the current existing batch.",
+  "screenshots": {
+    "v11-achievement-dates.png": {
+      "pixels": [
+        1366,
+        768
+      ],
+      "sha256": "1275ce7cfd6397827d7f2017a0f63a82013dd0c859e21100ff37613c8c85f27b"
+    },
+    "v11-backup-guide.png": {
+      "pixels": [
+        1366,
+        768
+      ],
+      "sha256": "118e42411e87a327fe5bb7cf77b57b921bc445284dce4c7fcc7402430e8bc7f4"
+    },
+    "v11-calendar.png": {
+      "pixels": [
+        340,
+        291
+      ],
+      "sha256": "a53898f0b5a98ee0ca9b4a77d960633038720359651b99bdcc2b491b11da9e51"
+    },
+    "v11-date-form.png": {
+      "pixels": [
+        560,
+        485
+      ],
+      "sha256": "c5d396a1438f537b8a2dbe4b152ca5fca4f88def61fc4c08bd66bff460ea4565"
+    },
+    "v11-task-filter.png": {
+      "pixels": [
+        1366,
+        768
+      ],
+      "sha256": "c191177fd79e1e15cd5c87c23ecf1b96b2bdc91ce875f53ed66c65dac76e1b55"
+    }
+  },
+  "screenshots_scope": "Actual Qt widget captures. Only local-path location_label hidden for public screenshots.",
+  "task_selector_native_check": "QTest keyboard Home/Down events; popup mouse route did not remain visible in attempts 1 and 2.",
+  "unverified": [
+    "True external editor save",
+    "Native Alt+Down focus interaction",
+    "Unattended mouse popup selection",
+    "Other DPI/OS/machines/GB-scale pressure"
+  ],
+  "github_target": "qiancheng19494/ResearchPortfolioManager",
+  "github_original_head": "8e68f4d3d68ef046b7a7c9e7164abde3279cd458"
+}

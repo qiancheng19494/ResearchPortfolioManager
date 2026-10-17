@@ -12,6 +12,7 @@ from services.portfolio import (
     PROJECT_CATEGORIES, PROJECT_STATUSES, TASK_STATUSES, PRIORITIES,
     ACHIEVEMENT_STATUSES,
 )
+from app.date_field import NullableDateField
 
 
 def named(widget, name):
@@ -55,7 +56,7 @@ class FormDialog(QDialog):
         form_layout.addLayout(self.form)
         self.scroll.setWidget(form_widget)
         self.layout.addWidget(self.scroll, 1)
-        self.note = QLabel("带 * 的字段必须填写。日期格式：YYYY-MM-DD；空日期不参与到期提醒。")
+        self.note = QLabel("带 * 的字段必须填写。日期可用日历选择或手输 YYYY-MM-DD，可一键清空；空日期不参与到期提醒。")
         self.note.setWordWrap(True)
         self.note.setObjectName("form_note")
         self.layout.addWidget(self.note)
@@ -82,10 +83,10 @@ class FormDialog(QDialog):
             field.setPlainText(str(value or ""))
             field.setMinimumHeight(60)
             field.setMaximumHeight(90)
+        elif key in {"start_date", "end_date", "due_date", "related_date"}:
+            field = NullableDateField(value)
         else:
             field = QLineEdit(str(value or ""))
-            if "date" in key:
-                field.setPlaceholderText("YYYY-MM-DD（可留空）")
         field.setObjectName("field_" + key)
         if self.readonly:
             if hasattr(field, "setReadOnly"):
@@ -370,7 +371,7 @@ class AboutDialog(QDialog):
         layout = QVBoxLayout(self)
         text = QTextEdit()
         text.setReadOnly(True)
-        text.setPlainText("本科科研项目与成果档案管理系统 V1.0\n内部项目名：ResearchPortfolioManager\n\n供本科生个人在本地管理科研项目、任务、成果和材料版本，支持检索、报告导出、完整备份与验证恢复。\n\n个人学习背景：示例学校、示例专业、本科。学校名称仅表示学习背景，不表示背书或合作关系。\n\n软件不认定成果真实性，不保证软件著作权登记结果。第三方依赖及许可见 THIRD_PARTY_NOTICES.md。")
+        text.setPlainText("本科科研项目与成果档案管理系统 V1.1\n内部项目名：ResearchPortfolioManager\n\n供本科生个人在本地管理科研项目、任务、成果和材料版本，支持检索、报告导出、完整备份与验证恢复。\n\n个人学习背景：示例学校、示例专业、本科。学校名称仅表示学习背景，不表示背书或合作关系。\n\n软件不认定成果真实性，不保证软件著作权登记结果。第三方依赖及许可见 THIRD_PARTY_NOTICES.md。")
         layout.addWidget(text)
         close = QDialogButtonBox(QDialogButtonBox.Close)
         close.button(QDialogButtonBox.Close).setText("关闭")

@@ -1,26 +1,14 @@
-# 本科科研项目与成果档案管理系统 V1.0
+# 本科科研项目与成果档案管理系统 V1.1
 
-> **公开版说明**：此仓库基于 2026-10-10 V1.0 Reviewed 修订包整理，仅脱敏个人默认值、本机路径、演示负责人和演示资料；不更改数据库结构或核心业务逻辑。原始 ZIP 仍由作者私下保留。完整 75 项 Windows GUI/兼容性历史验证记录对应原修订版，不等同于本公开脱敏副本已经重新完整通过。部分原始截图含本机状态栏路径，未随公开仓库提供。详见 [公开发布说明](PUBLIC_RELEASE_NOTES.md)。
+ResearchPortfolioManager 是面向个人的本地 Windows 桌面工具，用于管理科研项目、任务、成果和材料版本，支持 CSV/HTML 导出、完整 ZIP 备份及验证恢复。
 
-ResearchPortfolioManager 是面向个人的本地 Windows 桌面资料管理工具。使用 Python、PySide6 和 SQLite，实现项目、任务、成果、材料版本、CSV/HTML 报告和 ZIP 备份恢复。
+V1.1 在独立升级副本中改进三个现有操作：日期日历选择与清空、任务到期快捷筛选、备份恢复指引。保留六页、SQLite schema 1、成果类型状态规则、项目归档只读、材料版本管理，以及 Reviewed 的材料预览保护、负责人必填和统一配置校验。原 V1.0 与 Reviewed 交付保留。
 
-本目录为 **V1.0 首版修订的公开脱敏版本（Reviewed Public）**，软件界面名称与版本仍是“本科科研项目与成果档案管理系统 V1.0”。仅修复材料预览保护、负责人必填与配置类型校验，保留六页和数据库 schema 版本 1。原版目录及原 ZIP 保留，不覆盖；历史测试批次与本轮测试分别记录。
+本版同时接续公开仓库 v1.0.2 的运行目录及打包维护规则；未将私人资料或本机依赖环境作为公开源码。V1.1 的 Windows 安装包由既有 GitHub 工作流按 v1.1.0 构建发布；实际构建、烟测与下载状态以 Actions 和旁置上传回执为准。仓库原有 v1.0.2 安装包保留原版本身份，不能当作 V1.1 安装包使用。
 
-首次运行真实资料库为空。姓名和背景只是可编辑的个人资料默认值；软件不会自动认定论文录用、授权、获奖、软著登记或成果真实性。
+## 安装与启动
 
-## Windows EXE 与安装包（GitHub v1.0.2）
-
-Windows 64 位用户可前往 GitHub Releases 下载 `ResearchPortfolioManager_v1.0.2_Windows_Setup.exe`（安装版）或 `ResearchPortfolioManager_v1.0.2_Windows_Portable.zip`（便携版）。此安装版与源代码版使用相同的六页功能及 SQLite schema 1，打包过程不包含个人真实资料。`v1.0.0` 仍保留为源代码首发版本；`v1.0.2` 是后续界面文案与打包维护版本。
-
-安装版默认将资料保存在 `%LOCALAPPDATA%\ResearchPortfolioManager\user_data`，与安装程序本体分离。升级或卸载不会主动覆盖/删除此资料目录，仍需自行定期备份。想打开以前源码版的资料，请先备份，然后用快捷方式的目标参数 `--data-dir "原资料目录"` 指向该目录。**不要复制演示数据库覆盖真实数据。**
-
-GitHub Actions 生成的安装包未做商业代码签名，Windows 可能提示“未知发布者”。请仅从本仓库 Release 下载并核对 `SHA256SUMS.txt`。完整构建步骤见 `.github/workflows/windows-installer.yml` 和 `packaging/ResearchPortfolioManager.iss`，发布前必须通过 Windows 的打包启动烟测。打包编译过程不会自动声明在用户电脑上经过验证。
-
-## 环境与启动
-
-原修订版的 Windows 验证环境：Windows、Python 3.11.9、PySide6 6.10.3（Essentials/Addons/Shiboken6 均为 6.10.3）、SQLite 3.45.1。源码无需数据库服务或网络服务。首次交付不含 EXE 或安装包。
-
-在项目目录打开 PowerShell，通常按以下步骤安装和启动：
+源码运行需要 Windows、Python 3.11 和 `requirements.txt` 中的依赖。在项目目录打开 PowerShell：
 
 ```powershell
 py -3.11 -m venv .venv
@@ -28,99 +16,68 @@ py -3.11 -m venv .venv
 & .\.venv\Scripts\python.exe main.py
 ```
 
-如果 Windows 因项目目录太深而导致依赖安装报路径长度错误，请将仓库放在较短的路径（例如 `C:\Projects\ResearchPortfolioManager`），重新创建 `.venv`。本仓库不包含开发者的本机虚拟环境。
-
-使用项目内虚拟环境启动：
+可使用启动脚本：
 
 ```powershell
-& .\.venv\Scripts\python.exe main.py
-# 或者
 powershell -ExecutionPolicy Bypass -File .\run.ps1
-# 使用演示资料
+# 指向独立演示资料
 powershell -ExecutionPolicy Bypass -File .\run.ps1 -DataDir .\demo_data
+# 指定自己选择的资料目录
+powershell -ExecutionPolicy Bypass -File .\run.ps1 -DataDir 'D:\科研资料'
 ```
 
-指定其他资料目录：
+`run.ps1` 优先使用项目 `.venv`；本工作区专用环境只作为本机开发便利，不打包进交付。Windows 深目录安装依赖若受路径长度限制，可将源码放到较短目录后创建专用环境。
 
-```powershell
-& .\.venv\Scripts\python.exe main.py --data-dir "D:\我的科研资料"
-# 或使用启动辅助脚本
-powershell -ExecutionPolicy Bypass -File .\run.ps1 -DataDir "D:\我的科研资料"
-```
+源码模式默认使用项目内 `user_data/`；冻结安装版按既有维护规则使用 `%LOCALAPPDATA%\ResearchPortfolioManager\user_data`，不向安装目录写入资料。`--data-dir` 始终可指定独立位置；当前资料目录显示在状态栏。不要仅因打开了不同版本就假设已经切换到同一资料库。
 
-资料路径可以包含中文和空格。程序按电脑本地日期显示提醒。同一资料目录由进程锁保护；不同资料目录可以独立打开。
+首次真实资料库为空；默认个人资料可修改。姓名或演示记录不构成成果真实性、开发者或著作权人结论。
 
-## 数据位置与演示
+## 日期与任务
 
-默认资料根目录是项目内 `user_data/`，包含：
+项目起止日期、任务截止日期、成果相关日期和成果日期范围可手工输入 `YYYY-MM-DD`，也可点击“日历…”选择。日历只有点击“使用所选日期”才填入；取消或关闭不会改动原值。点击“清空”保留未设置日期，保存为空值。归档只读表单不能通过日历或清空绕过限制。非法日期和起止逆序继续由业务层拒绝。
 
-- `portfolio.sqlite3`：项目、任务、成果、材料及 schema 版本。
-- `materials/<UUID>/<原文件名>`：导入文件的受管理副本。
-- `config/settings.json`：个人资料与演示标志。
-- `logs/application.log`：运行与错误日志。
-- `preview_cache/<UUID>/<原文件名>`：打开时创建的隔离预览副本；不属于正式材料、不进入备份或交付包。
+任务页可快速查看今天到期、已逾期、“未来七天（明日至第七天）”的任务；未来七天按明日至第七天计算，与综合概览一致。快捷提醒只针对未完成且项目未归档的任务，无截止日期不进入到期结果；仍可结合关键词、项目和状态检索。清除快捷条件后可回到通常列表。
 
-关闭并重新打开会保留数据和设置。请勿直接移动单个受管理文件；移动完整资料目录后使用 `--data-dir` 指向该目录。
+## 材料与资料安全
 
-配置统一合并缺省值后校验：`name` 为非空文本，`background` 与 `interests` 为文本，`demo` 为布尔值。真实资料默认 `demo=false`，提供的演示为 `demo=true`。语法合法但类型错误的配置会指出字段并保留原文件，不能把字符串 `"false"` 当作布尔值；需修正实际错误后重新启动。
+导入材料复制源文件，使用 UUID 隔离同名文件与不同版本。打开前在后台核对受管理副本的大小和 SHA-256，生成 `preview_cache/<UUID>/` 独立预览，再由主线程调用默认程序；“打开预览目录”也指向预览目录。预览修改要保留时，请另存后通过“导入新版本”归档，归档项目须先恢复。软件不强制终止编辑器，也不自动删除已交给编辑器的预览。
 
-本次已提供独立 `demo_data` 演示目录，直接启动：
+材料缺失或变化会明确拒绝预览及完整备份；旧记录、旧哈希和版本保留。哈希不能重建丢失字节，恢复需要此前有效备份或可信原文件。预览缓存不属于正式材料，不进入完整备份或交付。
 
-```powershell
-& .\.venv\Scripts\python.exe main.py --data-dir demo_data
-```
+负责人在新建和编辑时必须是非空文本，显式空白或 `None` 不会保存为成功记录。只有调用方没有提供字段时才使用已验证个人姓名。历史空负责人不猜测、不批量补写。
 
-需要重新生成演示时指定另一新建/空目录：
+配置合并缺省值后统一校验：`name` 为非空文本、`background` 与 `interests` 为文本、`demo` 为布尔值。非法配置指出字段并保留原文件，不把字符串 `"false"` 转为布尔值。真实资料 `demo=false`，独立演示 `demo=true`。
 
-```powershell
-& .\.venv\Scripts\python.exe demo.py --data-dir demo_data_new
-& .\.venv\Scripts\python.exe main.py --data-dir demo_data_new
-```
+## 导出、备份与恢复
 
-`demo.py` 只接受新建或空目录，拒绝覆盖已有资料。所有演示项目与成果使用“【演示】”前缀，演示标志在界面醒目显示。已提供目录含 2 个项目、4 个任务、2 个准备中的其他成果、4 个 TXT 材料副本（每项目 V1/V2）。附件均为生成器新建的少量 TXT，状态和日期不代表示例用户的真实履历。演示目录不会与默认真实资料库混合。
+“报告与备份”支持按当前记录导出成果 CSV、项目 HTML 摘要。CSV 使用 UTF-8 BOM 和公式文本保护，HTML 转义输入。完整备份包含数据库一致快照、受管理材料、配置和校验清单，排除日志、预览缓存等运行文件。
 
-## 使用与恢复
+恢复分为选择完整 ZIP、选择新建或空资料目录、等待校验、用恢复目录重启。程序验证文件清单、大小和哈希、数据库 schema/外键及材料引用，不覆盖当前资料。恢复完成不会自动切换正在运行的窗口；请复制成功提示中的启动命令，关闭后运行，再核对记录、材料与演示标记。先保留当前可用资料和备份，不要手工解压覆盖正在使用的资料库。
 
-按“项目管理 → 任务管理 → 成果台账 → 材料归档”建立记录，再从“报告与备份”选择筛选条件及保存位置。材料导入复制原文件，UUID 目录隔离同名文件与不同版本。项目归档保留关联记录并使其只读，恢复后可继续修改。
-
-项目负责人在新建与编辑时均须为非空文本。仅在调用方没有提供该字段时，使用经过校验的个人姓名作为默认负责人；现存空负责人须由本人在编辑时填写，软件不会猜测或批量补写。
-
-材料打开前在后台核对受管理副本大小和 SHA-256，再生成独立预览副本，由主线程调用系统默认程序打开。目录入口也指向预览目录。外部编辑器保存修改只影响预览；若要保留修改，请另存文件后通过“导入新版本”归档。软件不强制关闭外部程序，也不自动删除已经交给程序的预览文件。受管理原副本若变化或丢失，会明确拒绝预览及完整备份；哈希不能重建文件，须从此前有效备份恢复到新目录，或找到可信原文件后按新版本重新导入。
-
-成果 CSV 使用 UTF-8 BOM，并处理公式开头文本；项目 HTML 摘要转义用户输入。导出内容来自实际保存记录，CSV 筛选条件在页面显示。
-
-备份生成完整 ZIP，使用 SQLite backup API 建立一致快照，附带配置、受管理材料和校验清单。备份期间写入暂停。恢复操作选择新建或空目录，经过临时目录校验后恢复，不覆盖当前资料目录。恢复成功后关闭程序，以 `main.py --data-dir "恢复目录"` 重新启动。首次打开恢复目录后建议检查项目、成果、材料并打开需要的附件。
+V1.1 保持 schema 1 和既有备份格式，旧版兼容的本轮实测结果见 [V1.1 升级说明](docs/V1.1升级说明.md) 与 [验证报告](docs/验证报告.md)。
 
 ## 验证与文档
 
-在项目目录运行独立测试（数据全部使用临时目录）：
+在项目目录使用安装了依赖的 Python 运行测试：
 
 ```powershell
-& .\.venv\Scripts\python.exe -m unittest discover -s tests -v
+& .\.venv\Scripts\python.exe -B -m unittest discover -s tests -v
 ```
 
-GUI 验证使用真实 Qt Windows 窗口和 QTest 点击，测试文件选择与确认对话框用受控临时路径替代。实际执行结果、范围和限制见 [验证报告](docs/验证报告.md)。
+本轮先运行新增 29 项，再运行继承/维护 79 项，共 **108 个不同测试最终全通过，失败 0、跳过 0**；两次原生交互测试失败和修正经过在验证报告保留。本机 offscreen 70 项为重复的工作流配置检查，不累计，也不等同远端构建或安装烟测。
 
-新增回归可先单独运行，再运行原有四个测试模块：
-
-```powershell
-& .\.venv\Scripts\python.exe -m unittest tests.test_preview_regression tests.test_reviewed_validation tests.test_reviewed_compatibility tests.test_reviewed_flow -v
-& .\.venv\Scripts\python.exe -m unittest tests.test_portfolio tests.test_files_backup tests.test_database_lock tests.test_gui -v
-```
-
-旧版兼容测试依赖原始开发工作区相邻的 `ResearchPortfolioManager/` 原版源码，公开仓库不包含该原版。单独解压修订 ZIP 后若没有该相邻原版目录，涉及旧版生成的用例会明确跳过；这不会影响日常启动、资料管理或恢复功能。只有提供原版并实际运行才能重新证明旧版生成兼容，不能把跳过记为通过。
+测试使用临时或隔离资料，不读取真实科研库。旧版兼容用例需要相邻原版源码；缺少时会明确跳过，不能记为通过。GUI 操作、对话框替代、关联调用模拟与真实外部应用检查按实际证据区分。V1.0 的 75 项 unittest 是 2026-10-10 批次；2026-10-17 的 128 MiB 补充检查包含 28 个脚本检查点，不是 28 项新增 unittest，也不能替代 V1.1 本轮复跑。
 
 - [使用说明](docs/使用说明.md)
 - [设计说明](docs/设计说明.md)
-- [开发记录](docs/开发记录.md)
 - [功能与代码对应表](docs/功能与代码对应表.md)
-- [首版修订说明](docs/首版修订说明.md)
-- [首版验收清单](docs/首版验收清单.md)
-- [首版状态](PROJECT_STATUS.md)
+- [开发记录](docs/开发记录.md)
+- [验证报告](docs/验证报告.md)
+- [V1.1 升级说明](docs/V1.1升级说明.md)
+- [V1.1 验收清单](docs/V1.1验收清单.md)
+- [项目状态](PROJECT_STATUS.md)
 - [第三方说明](THIRD_PARTY_NOTICES.md)
 
-本次不生成或提交软著申请材料，不确定开发者与著作权人权属，不承诺登记结果。代码与文档用于本人学习、审阅、修改和本地使用。
+公开仓库：[qiancheng19494/ResearchPortfolioManager](https://github.com/qiancheng19494/ResearchPortfolioManager)。上传提交、Actions 和安装包状态以最终回执为准。
 
-## 许可与权利
-
-当前未添加开源许可证（`LICENSE`）。公开 GitHub 仓库不等于自动授予复制、修改或再分发权限；如需开源授权，请权利人确认后选择许可证。第三方依赖许可请参阅 `THIRD_PARTY_NOTICES.md`。
+代码、测试和文档由 Codex AI 辅助完成，人工贡献、署名和权属仍由本人据实确认。本轮不制作、签署或提交登记申请资料，不承诺登记结果。

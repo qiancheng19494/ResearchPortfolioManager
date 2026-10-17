@@ -123,7 +123,7 @@ class ExportBackupService:
         output = f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><title>{escaped(project['name'])} — 项目摘要</title>
 <style>body{{font-family:"Microsoft YaHei",sans-serif;max-width:1200px;margin:32px auto;padding:0 20px;color:#24334b}}table{{border-collapse:collapse;width:100%;font-size:14px}}th,td{{border:1px solid #cbd5e1;padding:9px;vertical-align:top;overflow-wrap:anywhere;white-space:pre-wrap}}th{{background:#edf3fa}}dt{{font-weight:bold;float:left;width:110px}}dd{{margin-left:120px;margin-bottom:8px}}p{{white-space:pre-wrap}}.notice{{background:#fff0b3;padding:12px}}</style></head>
-<body><h1>{escaped(project['name'])}</h1>{demo}<p>本科科研项目与成果档案管理系统 V1.0 · 项目摘要</p>
+<body><h1>{escaped(project['name'])}</h1>{demo}<p>本科科研项目与成果档案管理系统 V1.1 · 项目摘要</p>
 <p>归档状态：{'已归档' if project['archived'] else '未归档'}</p><dl>{metadata}</dl>
 <h2>项目简介</h2><p>{escaped(project.get('description'))}</p>
 <h2>项目备注</h2><p>{escaped(project.get('notes'))}</p>{sections}
@@ -230,7 +230,7 @@ class ExportBackupService:
                 expected = Store(expected_dir)
                 with expected.connection() as expected_connection:
                     if self._schema_signature(connection) != self._schema_signature(expected_connection):
-                        raise ValueError('备份数据库结构不属于本软件支持的 V1.0。')
+                        raise ValueError('备份数据库结构不属于本软件支持的 schema 1。')
             for table, fields in [('projects', ['start_date', 'end_date']), ('tasks', ['due_date']),
                                   ('achievements', ['related_date'])]:
                 for row in connection.execute(f"SELECT {','.join(fields)} FROM {table}"):

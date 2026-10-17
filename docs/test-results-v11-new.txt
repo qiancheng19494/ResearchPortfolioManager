@@ -1,0 +1,83 @@
+{
+  "client_date": "2026-10-17",
+  "timezone": "Asia/Shanghai",
+  "started_utc": "2026-10-17T06:37:47.239986+00:00",
+  "python": "3.11.9",
+  "pyside6": "6.10.3",
+  "sqlite": "3.45.1",
+  "platform": "Windows-10-10.0.26100-SP0",
+  "qt_platform": "native Windows",
+  "modules": [
+    "tests.test_v11_dates",
+    "tests.test_v11_filters_reports",
+    "tests.test_v11_native"
+  ],
+  "batch": "new",
+  "returncode": 0,
+  "test_count": 29,
+  "unittest_seconds": 10.909,
+  "elapsed_seconds": 11.329
+}
+
+test_calendar_starts_at_existing_date_without_writing (tests.test_v11_dates.DateFieldTests.test_calendar_starts_at_existing_date_without_writing) ... ok
+test_cancel_keeps_empty_existing_or_invalid_text (tests.test_v11_dates.DateFieldTests.test_cancel_keeps_empty_existing_or_invalid_text) ... ok
+test_empty_and_existing_text_are_preserved (tests.test_v11_dates.DateFieldTests.test_empty_and_existing_text_are_preserved) ... ok
+test_explicit_calendar_confirmation_sets_iso_date (tests.test_v11_dates.DateFieldTests.test_explicit_calendar_confirmation_sets_iso_date) ... ok
+test_one_click_clear_and_text_changed_interface (tests.test_v11_dates.DateFieldTests.test_one_click_clear_and_text_changed_interface) ... ok
+test_readonly_blocks_keyboard_calendar_and_clear (tests.test_v11_dates.DateFieldTests.test_readonly_blocks_keyboard_calendar_and_clear) ... ok
+test_all_four_form_date_fields_use_nullable_widget (tests.test_v11_dates.DialogDatePersistenceTests.test_all_four_form_date_fields_use_nullable_widget) ... ok
+test_archived_form_dates_remain_readonly (tests.test_v11_dates.DialogDatePersistenceTests.test_archived_form_dates_remain_readonly) ... ok
+test_empty_form_dates_save_null_and_reopen_empty (tests.test_v11_dates.DialogDatePersistenceTests.test_empty_form_dates_save_null_and_reopen_empty) ... ok
+test_historical_empty_dates_survive_other_field_edit (tests.test_v11_dates.DialogDatePersistenceTests.test_historical_empty_dates_survive_other_field_edit) ... ok
+test_invalid_manual_date_creation_fails_without_success_or_row (tests.test_v11_dates.DialogDatePersistenceTests.test_invalid_manual_date_creation_fails_without_success_or_row) ... ok
+test_invalid_manual_date_edit_keeps_original_record (tests.test_v11_dates.DialogDatePersistenceTests.test_invalid_manual_date_edit_keeps_original_record) ... ok
+test_valid_dates_can_save_then_clear_to_null_after_reopen (tests.test_v11_dates.DialogDatePersistenceTests.test_valid_dates_can_save_then_clear_to_null_after_reopen) ... ok
+test_dashboard_and_task_filters_share_date_groups (tests.test_v11_filters_reports.DueFilterTests.test_dashboard_and_task_filters_share_date_groups) ... ok
+test_default_and_positional_api_still_include_complete_and_archived (tests.test_v11_filters_reports.DueFilterTests.test_default_and_positional_api_still_include_complete_and_archived) ... ok
+test_due_boundaries_and_exclusions (tests.test_v11_filters_reports.DueFilterTests.test_due_boundaries_and_exclusions) ... ok
+test_invalid_filter_or_reference_date_does_not_change_records (tests.test_v11_filters_reports.DueFilterTests.test_invalid_filter_or_reference_date_does_not_change_records) ... ok
+test_keyword_project_status_intersection_and_literal_wildcards (tests.test_v11_filters_reports.DueFilterTests.test_keyword_project_status_intersection_and_literal_wildcards) ... ok
+test_leap_day_and_year_transition_boundaries (tests.test_v11_filters_reports.DueFilterTests.test_leap_day_and_year_transition_boundaries) ... ok
+test_backup_success_includes_independent_restore_advice (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_backup_success_includes_independent_restore_advice) ... ok
+test_failed_backup_does_not_keep_old_success (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_failed_backup_does_not_keep_old_success) ... 后台操作失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\pages.py", line 650, in <lambda>
+    self.owner.run_job("正在创建数据库快照、复制材料并校验备份…", lambda: self.owner.exports.backup(path), lambda output: self.saved("完整备份成功", output, "建议将此备份恢复到独立空目录，关闭软件后重启核对，再确认备份可用。"))
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+OSError: 隔离模拟写入失败
+ok
+test_failed_restore_clears_stale_success_and_keeps_nonempty_target (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_failed_restore_clears_stale_success_and_keeps_nonempty_target) ... 后台操作失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\pages.py", line 662, in <lambda>
+    self.owner.run_job("正在验证备份并恢复到新目录…", lambda: self.owner.exports.restore(archive, target), self.restored)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 276, in restore
+    raise ValueError('恢复只允许新建或空目录，不能覆盖已有资料。')
+ValueError: 恢复只允许新建或空目录，不能覆盖已有资料。
+ok
+test_frozen_restore_command_uses_executable_without_source_entry (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_frozen_restore_command_uses_executable_without_source_entry) ... ok
+test_recovery_guidance_keeps_complete_escaped_command_and_checklist (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_recovery_guidance_keeps_complete_escaped_command_and_checklist) ... ok
+test_restore_success_retains_current_store_and_includes_restart_checklist (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_restore_success_retains_current_store_and_includes_restart_checklist) ... ok
+test_task_controls_intersect_and_reset_all_filters (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_task_controls_intersect_and_reset_all_filters) ... ok
+test_native_calendar_confirm_cancel_clear_and_null_reopen (tests.test_v11_native.V11NativeTests.test_native_calendar_confirm_cancel_clear_and_null_reopen) ... ok
+test_native_six_pages_date_range_and_real_backup_restore_guidance (tests.test_v11_native.V11NativeTests.test_native_six_pages_date_range_and_real_backup_restore_guidance) ... ok
+test_native_task_due_selector_intersections_and_reset (tests.test_v11_native.V11NativeTests.test_native_task_due_selector_intersections_and_reset) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 10.909s
+
+OK

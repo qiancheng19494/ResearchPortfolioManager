@@ -1,0 +1,317 @@
+{
+  "client_date": "2026-10-17",
+  "timezone": "Asia/Shanghai",
+  "started_utc": "2026-10-17T06:40:09.164957+00:00",
+  "python": "3.11.9",
+  "pyside6": "6.10.3",
+  "sqlite": "3.45.1",
+  "platform": "Windows-10-10.0.26100-SP0",
+  "qt_platform": "offscreen",
+  "modules": [
+    "tests.test_runtime_paths",
+    "tests.test_portfolio",
+    "tests.test_files_backup",
+    "tests.test_database_lock",
+    "tests.test_v11_dates",
+    "tests.test_v11_filters_reports"
+  ],
+  "batch": "ci",
+  "returncode": 0,
+  "test_count": 70,
+  "unittest_seconds": 8.1,
+  "elapsed_seconds": 8.461
+}
+
+test_frozen_default_is_per_user (tests.test_runtime_paths.RuntimePathsTest.test_frozen_default_is_per_user) ... ok
+test_frozen_restore_does_not_include_main_py (tests.test_runtime_paths.RuntimePathsTest.test_frozen_restore_does_not_include_main_py) ... ok
+test_source_default_is_project_local (tests.test_runtime_paths.RuntimePathsTest.test_source_default_is_project_local) ... ok
+test_source_restore_includes_main_py (tests.test_runtime_paths.RuntimePathsTest.test_source_restore_includes_main_py) ... ok
+test_achievement_delete_requires_unlink_and_task_delete_is_local (tests.test_portfolio.PortfolioTests.test_achievement_delete_requires_unlink_and_task_delete_is_local) ... ok
+test_archive_preserves_and_freezes_all_associations (tests.test_portfolio.PortfolioTests.test_archive_preserves_and_freezes_all_associations) ... ok
+test_completed_time_tracks_status (tests.test_portfolio.PortfolioTests.test_completed_time_tracks_status) ... ok
+test_csv_filter_bom_formula_neutralization_and_html_escape (tests.test_portfolio.PortfolioTests.test_csv_filter_bom_formula_neutralization_and_html_escape) ... ok
+test_demo_is_labelled_and_refuses_populated_directory (tests.test_portfolio.PortfolioTests.test_demo_is_labelled_and_refuses_populated_directory) ... ok
+test_empty_initialization_and_config_persistence (tests.test_portfolio.PortfolioTests.test_empty_initialization_and_config_persistence) ... ok
+test_end_to_end_export_backup_restore (tests.test_portfolio.PortfolioTests.test_end_to_end_export_backup_restore) ... ok
+test_filters_include_literal_wildcards (tests.test_portfolio.PortfolioTests.test_filters_include_literal_wildcards) ... ok
+test_fixed_date_dashboard_boundaries (tests.test_portfolio.PortfolioTests.test_fixed_date_dashboard_boundaries) ... ok
+test_illegal_associations_and_foreign_keys (tests.test_portfolio.PortfolioTests.test_illegal_associations_and_foreign_keys) ... ok
+test_material_copy_failure_has_no_record_or_leftover (tests.test_portfolio.PortfolioTests.test_material_copy_failure_has_no_record_or_leftover) ... 导入材料失败: 演示.txt
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\materials.py", line 100, in import_file
+    shutil.copyfile(source, temporary)
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+OSError: 测试复制失败
+ok
+test_material_versions_hashes_and_source_unchanged (tests.test_portfolio.PortfolioTests.test_material_versions_hashes_and_source_unchanged) ... ok
+test_missing_material_and_unsupported_import (tests.test_portfolio.PortfolioTests.test_missing_material_and_unsupported_import) ... ok
+test_persistence_edits_and_project_detail (tests.test_portfolio.PortfolioTests.test_persistence_edits_and_project_detail) ... ok
+test_required_fields_dates_and_enums (tests.test_portfolio.PortfolioTests.test_required_fields_dates_and_enums) ... ok
+test_restore_rejects_corruption_path_escape_nonempty_and_unsupported (tests.test_portfolio.PortfolioTests.test_restore_rejects_corruption_path_escape_nonempty_and_unsupported) ... 备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 281, in restore
+    with zipfile.ZipFile(archive, 'r') as package:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\zipfile.py", line 1312, in __init__
+    self._RealGetContents()
+  File "C:\Program Files\Python311\Lib\zipfile.py", line 1379, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 287, in restore
+    name = self._zip_path(info.filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 207, in _zip_path
+    raise ValueError('备份包含危险或不兼容的归档路径。')
+ValueError: 备份包含危险或不兼容的归档路径。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 287, in restore
+    name = self._zip_path(info.filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 207, in _zip_path
+    raise ValueError('备份包含危险或不兼容的归档路径。')
+ValueError: 备份包含危险或不兼容的归档路径。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 287, in restore
+    name = self._zip_path(info.filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 207, in _zip_path
+    raise ValueError('备份包含危险或不兼容的归档路径。')
+ValueError: 备份包含危险或不兼容的归档路径。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 287, in restore
+    name = self._zip_path(info.filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 207, in _zip_path
+    raise ValueError('备份包含危险或不兼容的归档路径。')
+ValueError: 备份包含危险或不兼容的归档路径。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 300, in restore
+    raise ValueError('不支持的备份格式或数据库版本。')
+ValueError: 不支持的备份格式或数据库版本。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 329, in restore
+    raise ValueError('备份文件损坏，SHA-256 校验失败。')
+ValueError: 备份文件损坏，SHA-256 校验失败。
+ok
+test_restore_rejects_rehashed_database_and_missing_material_reference (tests.test_portfolio.PortfolioTests.test_restore_rejects_rehashed_database_and_missing_material_reference)
+Valid ZIP hashes do not replace schema/relational/reference validation. ... 备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 330, in restore
+    self._validate_database(stage, manifest)
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 227, in _validate_database
+    raise ValueError('备份数据库版本不支持。')
+ValueError: 备份数据库版本不支持。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 330, in restore
+    self._validate_database(stage, manifest)
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 246, in _validate_database
+    raise ValueError('备份材料引用与独立存储路径不一致。')
+ValueError: 备份材料引用与独立存储路径不一致。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 330, in restore
+    self._validate_database(stage, manifest)
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 224, in _validate_database
+    raise ValueError('备份数据库存在无效关联。')
+ValueError: 备份数据库存在无效关联。
+ok
+test_type_status_constraints_and_change (tests.test_portfolio.PortfolioTests.test_type_status_constraints_and_change) ... ok
+test_archived_project_readonly_and_link_rules (tests.test_files_backup.FilesBackupTests.test_archived_project_readonly_and_link_rules) ... ok
+test_backup_holds_write_lock_and_snapshot_precedes_waiting_write (tests.test_files_backup.FilesBackupTests.test_backup_holds_write_lock_and_snapshot_precedes_waiting_write) ... ok
+test_backup_rejects_missing_material_and_preserves_previous_archive (tests.test_files_backup.FilesBackupTests.test_backup_rejects_missing_material_and_preserves_previous_archive) ... 完整备份失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 173, in backup
+    raise FileNotFoundError(f"材料副本缺失，备份已取消：{record['original_name']}")
+FileNotFoundError: 材料副本缺失，备份已取消：证明 材料.txt
+ok
+test_backup_snapshot_restore_and_no_recursive_package (tests.test_files_backup.FilesBackupTests.test_backup_snapshot_restore_and_no_recursive_package) ... ok
+test_copy_failure_and_partial_file_cleanup (tests.test_files_backup.FilesBackupTests.test_copy_failure_and_partial_file_cleanup) ... 导入材料失败: 证明 材料.txt
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\materials.py", line 100, in import_file
+    shutil.copyfile(source, temporary)
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1189, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\tests\test_files_backup.py", line 81, in partial_then_fail
+    raise OSError('模拟复制中断')
+OSError: 模拟复制中断
+ok
+test_corrupt_backup_and_unknown_version_rejected (tests.test_files_backup.FilesBackupTests.test_corrupt_backup_and_unknown_version_rejected) ... 备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 313, in restore
+    raise ValueError('备份文件校验描述无效。')
+ValueError: 备份文件校验描述无效。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 300, in restore
+    raise ValueError('不支持的备份格式或数据库版本。')
+ValueError: 不支持的备份格式或数据库版本。
+ok
+test_csv_filters_bom_and_formula_defense_preserve_database (tests.test_files_backup.FilesBackupTests.test_csv_filters_bom_and_formula_defense_preserve_database) ... ok
+test_dangerous_paths_unlisted_files_and_nonempty_target_rejected (tests.test_files_backup.FilesBackupTests.test_dangerous_paths_unlisted_files_and_nonempty_target_rejected) ... 备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 287, in restore
+    name = self._zip_path(info.filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 207, in _zip_path
+    raise ValueError('备份包含危险或不兼容的归档路径。')
+ValueError: 备份包含危险或不兼容的归档路径。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 287, in restore
+    name = self._zip_path(info.filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 207, in _zip_path
+    raise ValueError('备份包含危险或不兼容的归档路径。')
+ValueError: 备份包含危险或不兼容的归档路径。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 287, in restore
+    name = self._zip_path(info.filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 207, in _zip_path
+    raise ValueError('备份包含危险或不兼容的归档路径。')
+ValueError: 备份包含危险或不兼容的归档路径。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 287, in restore
+    name = self._zip_path(info.filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 207, in _zip_path
+    raise ValueError('备份包含危险或不兼容的归档路径。')
+ValueError: 备份包含危险或不兼容的归档路径。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 287, in restore
+    name = self._zip_path(info.filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 207, in _zip_path
+    raise ValueError('备份包含危险或不兼容的归档路径。')
+ValueError: 备份包含危险或不兼容的归档路径。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 303, in restore
+    raise ValueError('备份文件与必要清单不一致。')
+ValueError: 备份文件与必要清单不一致。
+备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 303, in restore
+    raise ValueError('备份文件与必要清单不一致。')
+ValueError: 备份文件与必要清单不一致。
+ok
+test_export_cannot_overwrite_managed_data (tests.test_files_backup.FilesBackupTests.test_export_cannot_overwrite_managed_data) ... ok
+test_forged_database_schema_rejected_even_when_hash_updated (tests.test_files_backup.FilesBackupTests.test_forged_database_schema_rejected_even_when_hash_updated) ... 备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 330, in restore
+    self._validate_database(stage, manifest)
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 233, in _validate_database
+    raise ValueError('备份数据库结构不属于本软件支持的 schema 1。')
+ValueError: 备份数据库结构不属于本软件支持的 schema 1。
+ok
+test_html_escapes_all_user_text_and_includes_material (tests.test_files_backup.FilesBackupTests.test_html_escapes_all_user_text_and_includes_material) ... ok
+test_managed_zip_is_copied_opaquely_and_symlink_archive_rejected (tests.test_files_backup.FilesBackupTests.test_managed_zip_is_copied_opaquely_and_symlink_archive_rejected) ... 备份恢复失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 290, in restore
+    raise ValueError('备份包含重复路径、链接、目录项或加密文件。')
+ValueError: 备份包含重复路径、链接、目录项或加密文件。
+ok
+test_missing_material_and_modified_material_detected (tests.test_files_backup.FilesBackupTests.test_missing_material_and_modified_material_detected) ... ok
+test_same_name_and_version_isolation_original_preserved (tests.test_files_backup.FilesBackupTests.test_same_name_and_version_isolation_original_preserved) ... ok
+test_scripts_rejected_and_literal_keyword_search (tests.test_files_backup.FilesBackupTests.test_scripts_rejected_and_literal_keyword_search) ... ok
+test_silent_copy_corruption_rejected (tests.test_files_backup.FilesBackupTests.test_silent_copy_corruption_rejected) ... 导入材料失败: 证明 材料.txt
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\materials.py", line 104, in import_file
+    raise OSError('材料副本校验失败，源文件可能在导入过程中发生变化。')
+OSError: 材料副本校验失败，源文件可能在导入过程中发生变化。
+ok
+test_transaction_failure_compensates_copy (tests.test_files_backup.FilesBackupTests.test_transaction_failure_compensates_copy) ... 导入材料失败: 证明 材料.txt
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\materials.py", line 110, in import_file
+    connection.execute('''INSERT INTO materials
+sqlite3.IntegrityError: 模拟写入失败
+ok
+test_archive_guard_prevents_raw_update_and_delete (tests.test_database_lock.DatabaseSafeguardsTest.test_archive_guard_prevents_raw_update_and_delete) ... ok
+test_config_reopen_and_unknown_schema_preserved (tests.test_database_lock.DatabaseSafeguardsTest.test_config_reopen_and_unknown_schema_preserved) ... ok
+test_foreign_keys_and_database_type_state_constraint (tests.test_database_lock.DatabaseSafeguardsTest.test_foreign_keys_and_database_type_state_constraint) ... ok
+test_null_required_name_rejected (tests.test_database_lock.DatabaseSafeguardsTest.test_null_required_name_rejected) ... ok
+test_single_directory_lock_rejected_by_second_process (tests.test_database_lock.DatabaseSafeguardsTest.test_single_directory_lock_rejected_by_second_process) ... ok
+test_calendar_starts_at_existing_date_without_writing (tests.test_v11_dates.DateFieldTests.test_calendar_starts_at_existing_date_without_writing) ... ok
+test_cancel_keeps_empty_existing_or_invalid_text (tests.test_v11_dates.DateFieldTests.test_cancel_keeps_empty_existing_or_invalid_text) ... ok
+test_empty_and_existing_text_are_preserved (tests.test_v11_dates.DateFieldTests.test_empty_and_existing_text_are_preserved) ... ok
+test_explicit_calendar_confirmation_sets_iso_date (tests.test_v11_dates.DateFieldTests.test_explicit_calendar_confirmation_sets_iso_date) ... ok
+test_one_click_clear_and_text_changed_interface (tests.test_v11_dates.DateFieldTests.test_one_click_clear_and_text_changed_interface) ... ok
+test_readonly_blocks_keyboard_calendar_and_clear (tests.test_v11_dates.DateFieldTests.test_readonly_blocks_keyboard_calendar_and_clear) ... ok
+test_all_four_form_date_fields_use_nullable_widget (tests.test_v11_dates.DialogDatePersistenceTests.test_all_four_form_date_fields_use_nullable_widget) ... ok
+test_archived_form_dates_remain_readonly (tests.test_v11_dates.DialogDatePersistenceTests.test_archived_form_dates_remain_readonly) ... ok
+test_empty_form_dates_save_null_and_reopen_empty (tests.test_v11_dates.DialogDatePersistenceTests.test_empty_form_dates_save_null_and_reopen_empty) ... ok
+test_historical_empty_dates_survive_other_field_edit (tests.test_v11_dates.DialogDatePersistenceTests.test_historical_empty_dates_survive_other_field_edit) ... ok
+test_invalid_manual_date_creation_fails_without_success_or_row (tests.test_v11_dates.DialogDatePersistenceTests.test_invalid_manual_date_creation_fails_without_success_or_row) ... ok
+test_invalid_manual_date_edit_keeps_original_record (tests.test_v11_dates.DialogDatePersistenceTests.test_invalid_manual_date_edit_keeps_original_record) ... ok
+test_valid_dates_can_save_then_clear_to_null_after_reopen (tests.test_v11_dates.DialogDatePersistenceTests.test_valid_dates_can_save_then_clear_to_null_after_reopen) ... ok
+test_dashboard_and_task_filters_share_date_groups (tests.test_v11_filters_reports.DueFilterTests.test_dashboard_and_task_filters_share_date_groups) ... ok
+test_default_and_positional_api_still_include_complete_and_archived (tests.test_v11_filters_reports.DueFilterTests.test_default_and_positional_api_still_include_complete_and_archived) ... ok
+test_due_boundaries_and_exclusions (tests.test_v11_filters_reports.DueFilterTests.test_due_boundaries_and_exclusions) ... ok
+test_invalid_filter_or_reference_date_does_not_change_records (tests.test_v11_filters_reports.DueFilterTests.test_invalid_filter_or_reference_date_does_not_change_records) ... ok
+test_keyword_project_status_intersection_and_literal_wildcards (tests.test_v11_filters_reports.DueFilterTests.test_keyword_project_status_intersection_and_literal_wildcards) ... ok
+test_leap_day_and_year_transition_boundaries (tests.test_v11_filters_reports.DueFilterTests.test_leap_day_and_year_transition_boundaries) ... ok
+test_backup_success_includes_independent_restore_advice (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_backup_success_includes_independent_restore_advice) ... ok
+test_failed_backup_does_not_keep_old_success (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_failed_backup_does_not_keep_old_success) ... 后台操作失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\pages.py", line 650, in <lambda>
+    self.owner.run_job("正在创建数据库快照、复制材料并校验备份…", lambda: self.owner.exports.backup(path), lambda output: self.saved("完整备份成功", output, "建议将此备份恢复到独立空目录，关闭软件后重启核对，再确认备份可用。"))
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+OSError: 隔离模拟写入失败
+ok
+test_failed_restore_clears_stale_success_and_keeps_nonempty_target (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_failed_restore_clears_stale_success_and_keeps_nonempty_target) ... 后台操作失败
+Traceback (most recent call last):
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\workers.py", line 15, in run
+    self.succeeded.emit(self.function())
+                        ^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\app\pages.py", line 662, in <lambda>
+    self.owner.run_job("正在验证备份并恢复到新目录…", lambda: self.owner.exports.restore(archive, target), self.restored)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\REDACTED_WORKSPACE\outputs\ResearchPortfolioManager_V1.1\services\export_backup.py", line 276, in restore
+    raise ValueError('恢复只允许新建或空目录，不能覆盖已有资料。')
+ValueError: 恢复只允许新建或空目录，不能覆盖已有资料。
+ok
+test_frozen_restore_command_uses_executable_without_source_entry (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_frozen_restore_command_uses_executable_without_source_entry) ... ok
+test_recovery_guidance_keeps_complete_escaped_command_and_checklist (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_recovery_guidance_keeps_complete_escaped_command_and_checklist) ... ok
+test_restore_success_retains_current_store_and_includes_restart_checklist (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_restore_success_retains_current_store_and_includes_restart_checklist) ... ok
+test_task_controls_intersect_and_reset_all_filters (tests.test_v11_filters_reports.FilterAndReportWidgetTests.test_task_controls_intersect_and_reset_all_filters) ... ok
+
+----------------------------------------------------------------------
+Ran 70 tests in 8.100s
+
+OK

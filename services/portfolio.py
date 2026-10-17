@@ -6,6 +6,7 @@ from datetime import date, datetime, timedelta
 PROJECT_CATEGORIES = ['研究', '软著', '竞赛', '课程', '其他']
 PROJECT_STATUSES = ['计划中', '进行中', '已完成', '暂停']
 TASK_STATUSES = ['待办', '进行中', '已完成']
+TASK_DUE_FILTERS = {'today': '今天到期', 'overdue': '已逾期', 'upcoming': '未来七天（明日至第七天）'}
 PRIORITIES = ['低', '中', '高']
 ACHIEVEMENT_STATUSES = {
     '论文': ['准备中', '已投稿', '审稿中', '已录用', '已发表', '退稿'],
@@ -49,6 +50,24 @@ def choice(value, options, label):
 
 def like_pattern(value):
     return '%' + str(value).replace('\\', '\\\\').replace('%', '\\%').replace('_', '\\_') + '%'
+
+
+def task_due_groups(tasks, today=None):
+    """Use one inclusive seven-day boundary for task filters and the dashboard."""
+    if today is None:
+        today = date.today()
+    elif isinstance(today, str):
+        today = date.fromisoformat(clean_date(today))
+    if type(today) is not date:
+        raise ValueError('参考日期必须为合法的 YYYY-MM-DD 或日期对象')
+    current = today.isoformat()
+    end = (today + timedelta(days=7)).isoformat()
+    unfinished = [t for t in tasks if not t.get('project_archived') and t['status'] != '已完成']
+    return {
+        'overdue': sorted([t for t in unfinished if t['due_date'] and t['due_date'] < current], key=lambda t: t['due_date']),
+        'today': [t for t in unfinished if t['due_date'] == current],
+        'upcoming': sorted([t for t in unfinished if t['due_date'] and current < t['due_date'] <= end], key=lambda t: t['due_date']),
+    }
 
 
 class PortfolioService:
@@ -208,23 +227,19 @@ class PortfolioService:
         with self.store.connection() as conn:
             return [dict(row) for row in conn.execute(sql, args)]
 
-    def list_tasks(self, keyword='', project_id=None, status='', active_only=False):
-        return self._list_related('tasks', keyword, project_id, status, active_only=active_only)
+    def list_tasks(self, keyword='', project_id=None, status='', active_only=False, due_filter='', today=None):
+        if due_filter not in ('', *TASK_DUE_FILTERS):
+            raise ValueError('任务到期筛选选项无效')
+        records = self._list_related('tasks', keyword, project_id, status, active_only=active_only)
+        return task_due_groups(records, today)[due_filter] if due_filter else records
 
     def list_achievements(self, keyword='', project_id=None, type='', status='', date_from='', date_to=''):
         return self._list_related('achievements', keyword, project_id, status, type, date_from, date_to)
 
     def dashboard(self, today=None):
-        if today is None:
-            today = date.today()
-        elif isinstance(today, str):
-            today = date.fromisoformat(clean_date(today))
-        end = (today + timedelta(days=7)).isoformat()
-        current = today.isoformat()
         unfinished = [t for t in self.list_tasks(active_only=True) if t['status'] != '已完成']
-        overdue = sorted([t for t in unfinished if t['due_date'] and t['due_date'] < current], key=lambda t: t['due_date'])
-        today_tasks = [t for t in unfinished if t['due_date'] == current]
-        upcoming = sorted([t for t in unfinished if t['due_date'] and current < t['due_date'] <= end], key=lambda t: t['due_date'])
+        due = task_due_groups(unfinished, today)
+        overdue, today_tasks, upcoming = due['overdue'], due['today'], due['upcoming']
         with self.store.connection() as conn:
             counts = {key: conn.execute(f'SELECT count(*) FROM {table}').fetchone()[0] for key, table in [('achievements_count', 'achievements'), ('materials_count', 'materials')]}
         projects = self.list_projects()

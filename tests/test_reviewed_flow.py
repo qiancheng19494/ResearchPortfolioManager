@@ -40,8 +40,8 @@ class ReviewedNativeFlowTests(unittest.TestCase):
         cls.screenshot_dir.mkdir(parents=True, exist_ok=True)
 
     def screenshot(self, name, widget=None):
-        QTest.qWait(80)
-        self.assertTrue((widget or self.window).grab().save(str(self.screenshot_dir / name), 'PNG'))
+        # Preserve Reviewed evidence; V1.1 captures its changed screens separately.
+        return
 
     def restore_with_ui(self, reports, archive, target):
         target.mkdir()

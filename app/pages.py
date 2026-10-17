@@ -1,7 +1,6 @@
 """六个导航页面及其实际业务操作。"""
 from datetime import date
 from pathlib import Path
-import sys
 from PySide6.QtCore import Qt, QUrl
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
@@ -10,11 +9,12 @@ from PySide6.QtWidgets import (
     QAbstractItemView, QHeaderView, QMessageBox, QFileDialog, QGroupBox,
     QScrollArea,
 )
-from runtime_paths import restore_launch_command
-from services.portfolio import PROJECT_CATEGORIES, PROJECT_STATUSES, TASK_STATUSES, ACHIEVEMENT_STATUSES
+from services.portfolio import PROJECT_CATEGORIES, PROJECT_STATUSES, TASK_STATUSES, TASK_DUE_FILTERS, ACHIEVEMENT_STATUSES
 from app.dialogs import (
     ProjectDialog, TaskDialog, AchievementDialog, MaterialDialog, named,
 )
+from runtime_paths import restore_launch_command
+from app.date_field import NullableDateField
 
 
 def filter_combo(label, values=()):
@@ -199,14 +199,21 @@ class ProjectsPage(ListPage):
 
 class TasksPage(ListPage):
     def __init__(self, owner):
-        super().__init__(owner, "tasks", "截止日期可留空。今天到期与逾期分别标示；已完成任务和归档项目的任务不进入活跃提醒。", [("title", "任务标题"), ("project_name", "所属项目"), ("due_date", "截止日期"), ("priority", "优先级"), ("status", "状态"), ("reminder", "提醒"), ("completed_at", "完成时间")])
+        super().__init__(owner, "tasks", "截止日期可留空。到期快捷筛选仅显示未完成、未归档项目中有截止日期的任务；未来七天为明日至第七天。选择“全部到期情况”可查看全部记录。", [("title", "任务标题"), ("project_name", "所属项目"), ("due_date", "截止日期"), ("priority", "优先级"), ("status", "状态"), ("reminder", "提醒"), ("completed_at", "完成时间")])
         self.project = named(QComboBox(), "tasks_project")
         self.status = named(filter_combo("全部状态", TASK_STATUSES), "tasks_status")
+        self.due_filter = named(QComboBox(), "tasks_due_filter")
+        self.due_filter.addItem("全部到期情况", "")
+        for value, label in TASK_DUE_FILTERS.items():
+            self.due_filter.addItem(label, value)
+        self.due_filter.setToolTip("仅今天到期、已逾期和未来七天筛选排除已完成、归档项目及无截止日期任务；可叠加关键词、项目和状态。")
         self.filters.addWidget(self.project, 1)
         self.filters.addWidget(self.status)
+        self.filters.addWidget(self.due_filter)
         self.add_filter_button()
         self.project.currentIndexChanged.connect(self.refresh)
         self.status.currentIndexChanged.connect(self.refresh)
+        self.due_filter.currentIndexChanged.connect(self.refresh)
         self.new_button = self.add_action("新增任务", "new", self.new)
         self.edit_button = self.add_action("编辑 / 查看", "edit", self.edit)
         self.delete_button = self.add_action("删除任务", "delete", self.delete)
@@ -215,7 +222,7 @@ class TasksPage(ListPage):
 
     def refresh(self):
         populate_projects(self.project, self.owner)
-        records = self.owner.portfolio.list_tasks(keyword=self.search.text().strip(), project_id=self.project.currentData(), status=self.status.currentData())
+        records = self.owner.portfolio.list_tasks(keyword=self.search.text().strip(), project_id=self.project.currentData(), status=self.status.currentData(), due_filter=self.due_filter.currentData())
         today = date.today().isoformat()
         for row in records:
             row["reminder"] = ""
@@ -229,6 +236,7 @@ class TasksPage(ListPage):
         self.search.clear()
         self.project.setCurrentIndex(0)
         self.status.setCurrentIndex(0)
+        self.due_filter.setCurrentIndex(0)
         self.refresh()
 
     def update_actions(self):
@@ -265,8 +273,8 @@ class AchievementsPage(ListPage):
         self.add_filter_button()
         date_row = QHBoxLayout()
         date_row.addWidget(QLabel("相关日期范围"))
-        self.date_from = named(QLineEdit(), "achievements_date_from")
-        self.date_to = named(QLineEdit(), "achievements_date_to")
+        self.date_from = named(NullableDateField(), "achievements_date_from")
+        self.date_to = named(NullableDateField(), "achievements_date_to")
         self.date_from.setPlaceholderText("起始 YYYY-MM-DD，可留空")
         self.date_to.setPlaceholderText("结束 YYYY-MM-DD，可留空")
         date_row.addWidget(self.date_from)
@@ -511,7 +519,15 @@ class ReportsPage(QWidget):
         super().__init__()
         self.owner = owner
         self.setObjectName("reports_page")
-        layout = QVBoxLayout(self)
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(0, 0, 0, 0)
+        self.scroll = QScrollArea()
+        self.scroll.setWidgetResizable(True)
+        self.scroll.setFrameShape(QScrollArea.NoFrame)
+        content = QWidget()
+        self.scroll.setWidget(content)
+        outer.addWidget(self.scroll)
+        layout = QVBoxLayout(content)
         layout.setContentsMargins(20, 12, 20, 16)
         layout.setSpacing(14)
         description = QLabel("导出实际已保存的信息；备份包含数据库一致快照、材料副本和用户配置。恢复仅写入新的或空的资料目录。")
@@ -543,7 +559,8 @@ class ReportsPage(QWidget):
         layout.addWidget(export)
         backup = QGroupBox("完整备份与验证恢复")
         backup_layout = QVBoxLayout(backup)
-        explanation = QLabel("备份时暂停业务写入。恢复前验证清单哈希、数据库版本、关联与材料引用；危险路径或不支持的备份会被拒绝。恢复完成后使用提示命令切换资料目录。")
+        explanation = QLabel("建议顺序：① 创建完整 ZIP 备份并保存在资料目录之外；② 将备份恢复到新建或空目录；③ 关闭软件，使用结果中的完整命令打开恢复目录；④ 核对项目、任务、成果、材料和真实／演示标记。\n备份时暂停业务写入；恢复前验证哈希、数据库结构、关联与材料引用。恢复不会切换或覆盖当前资料库。")
+        explanation.setObjectName("reports_backup_guidance")
         explanation.setWordWrap(True)
         backup_layout.addWidget(explanation)
         backup_buttons = QHBoxLayout()
@@ -629,7 +646,8 @@ class ReportsPage(QWidget):
     def backup(self):
         path, _ = QFileDialog.getSaveFileName(self, "创建完整备份", f"科研档案备份-{date.today().isoformat()}.zip", "ZIP 备份 (*.zip)")
         if path:
-            self.owner.run_job("正在创建数据库快照、复制材料并校验备份…", lambda: self.owner.exports.backup(path), lambda output: self.saved("完整备份成功", output))
+            self.prepare_result("完整备份")
+            self.owner.run_job("正在创建数据库快照、复制材料并校验备份…", lambda: self.owner.exports.backup(path), lambda output: self.saved("完整备份成功", output, "建议将此备份恢复到独立空目录，关闭软件后重启核对，再确认备份可用。"))
 
     def restore(self):
         archive, _ = QFileDialog.getOpenFileName(self, "选择完整 ZIP 备份", "", "ZIP 备份 (*.zip)")
@@ -640,9 +658,17 @@ class ReportsPage(QWidget):
             return
         if QMessageBox.question(self, "验证并恢复", f"将验证备份并恢复到：\n{target}\n\n目标必须为空；恢复后当前资料库继续使用，切换需要重新启动。", QMessageBox.Yes | QMessageBox.No, QMessageBox.No) != QMessageBox.Yes:
             return
+        self.prepare_result("备份恢复")
         self.owner.run_job("正在验证备份并恢复到新目录…", lambda: self.owner.exports.restore(archive, target), self.restored)
+
+    def prepare_result(self, operation):
+        self.result_path = None
+        self.open_result_button.setEnabled(False)
+        self.result.setText(f"{operation}已开始，尚无本次成功结果。完成后显示保存位置；如失败，请查看错误提示。")
 
     def restored(self, path):
         command = restore_launch_command(path)
-        self.saved("恢复与完整性校验成功", path, f"请关闭软件，在项目目录重新启动：\n{command}")
-        self.owner.show_info("恢复成功", f"记录、关联与材料哈希已通过验证。\n目标资料目录：{path}\n\n关闭软件后，在项目目录运行：\n{command}")
+        checklist = "重启后请本人核对：\n□ 项目及归档状态\n□ 任务及截止日期\n□ 成果及事实状态\n□ 材料版本与预览\n□ 真实／演示标记"
+        instructions = f"当前资料库继续使用，未自动切换。请先关闭软件，再运行：\n{command}\n\n{checklist}"
+        self.saved("恢复与完整性校验成功", path, instructions)
+        self.owner.show_info("恢复成功", f"记录、关联与材料哈希已通过验证。\n目标资料目录：{path}\n\n{instructions}")

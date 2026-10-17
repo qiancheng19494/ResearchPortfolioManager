@@ -128,11 +128,8 @@ class NativeGuiTests(unittest.TestCase):
         self.assertFalse(self.window.last_job_error)
 
     def screenshot(self, name):
-        # 原批次界面证据保留，本轮只更新受影响的材料页真实截图。
-        if name != "04-materials.png":
-            return
-        QTest.qWait(80)
-        self.assertTrue(self.window.grab().save(str(self.screenshot_dir / name), "PNG"))
+        # V1.0 screenshots are historical; current V1.1 evidence has separate names.
+        return
 
     def test_native_six_pages_actions_end_to_end(self):
         self.assertEqual(self.application.platformName(), "windows", "此项必须由原生 Windows Qt 平台运行")
